@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<gui:Mmdb xmlns="org.apache.pivot.wtk" xmlns:bxml="http://pivot.apache.org/bxml" xmlns:gui="com.npm.mmdb.gui">
+	<columns>
+		<TablePane.Column width="1*"/>
+	</columns>
+	<TablePane.Row height="2*">
+		<FillPane>
+			<bxml:include src="core/toolbar.bxml" inline="true"/>
+		</FillPane>
+	</TablePane.Row>
+	<TablePane.Row height="15*">
+		<FillPane>
+			<bxml:include src="core/dashboard.bxml" inline="true"/>
+		</FillPane>
+	</TablePane.Row>
+	<TablePane.Row height="1*">
+		<FillPane>
+			<bxml:include src="core/bottomline.bxml" inline="true"/>
+		</FillPane>
+	</TablePane.Row>
+</gui:Mmdb>

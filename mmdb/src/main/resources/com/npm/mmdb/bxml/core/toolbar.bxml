@@ -1,0 +1,65 @@
+<gui:Toolbar bxml:id="toolbar" xmlns="org.apache.pivot.wtk" xmlns:bxml="http://pivot.apache.org/bxml"
+	xmlns:gui="com.npm.mmdb.gui.core">
+	<columns>
+		<TablePane.Column width="255*"/>
+		<TablePane.Column width="1473*"/>
+	</columns>
+	<TablePane.Row height="1*">
+		<TablePane>
+			<columns>
+				<TablePane.Column width="1*"/>
+			</columns>
+			<TablePane.Row height="13*">
+				<FillPane>
+					<!-- <ImageView bxml:id="logo" image="/com/mmdb/images/mmdb-v1.0.png" styles="{fill:'false', horizontalAlignment:'center', verticalAlignment:'center'}"/> -->
+					<Label text="logo"/>
+				</FillPane>
+			</TablePane.Row>
+			<TablePane.Row height="5*">
+				<FillPane>
+					<!-- <BoxPane bxml:id="contextPane" styles="{padding:'0', verticalAlignment:'center', horizontalAlignment:'right'}"/> -->
+					<Label text="context"/>
+				</FillPane>
+			</TablePane.Row>
+		</TablePane>
+		<TablePane>
+			<columns>
+				<TablePane.Column width="1*"/>
+			</columns>
+			<TablePane.Row height="5*">
+				<FillPane>
+					<!-- <BoxPane bxml:id="breadcrumbPane" styles="{padding:'20', spacing:'20', verticalAlignment:'center'}"/> -->
+					<Label text="breadcrumb"/>
+				</FillPane>
+			</TablePane.Row>
+			<TablePane.Row height="8*">
+				<FillPane>
+					<TablePane>
+						<columns>
+							<TablePane.Column width="1*"/>
+							<TablePane.Column width="1*"/>
+							<TablePane.Column width="1*"/>
+						</columns>
+						<TablePane.Row height="1*">
+							<bxml:define>
+								<ButtonGroup bxml:id="buttonRowGroup"/>
+							</bxml:define>
+							<!-- <PushButton bxml:id="standingsButton" toggleButton="true" buttonGroup="$buttonRowGroup"/>
+							<PushButton bxml:id="scheduleButton" toggleButton="true" buttonGroup="$buttonRowGroup"/>
+							<PushButton bxml:id="performanceButton" toggleButton="true" buttonGroup="$buttonRowGroup"/> -->
+							<Label text="standings"/>
+							<Label text="schedule"/>
+							<Label text="performance"/>
+						</TablePane.Row>
+					</TablePane>
+				</FillPane>
+			</TablePane.Row>
+			<TablePane.Row height="5*">
+				<FillPane>
+					<!-- <BoxPane bxml:id="actionLinksPane" styles="{padding:'20', spacing:'20', verticalAlignment:'center'}"/> -->
+					<Label text="actionLinks"/>
+				</FillPane>
+			</TablePane.Row>
+		</TablePane>
+	</TablePane.Row>
+</gui:Toolbar>

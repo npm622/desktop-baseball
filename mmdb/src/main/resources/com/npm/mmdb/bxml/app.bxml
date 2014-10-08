@@ -1,0 +1,3 @@
+<Window title="mmdb" maximized="true" xmlns="org.apache.pivot.wtk" xmlns:bxml="http://pivot.apache.org/bxml">
+	<bxml:include src="mmdb.bxml"/>
+</Window>
