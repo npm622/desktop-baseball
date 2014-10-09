@@ -1,3 +1,5 @@
 <Window title="mmdb" maximized="true" xmlns="org.apache.pivot.wtk" xmlns:bxml="http://pivot.apache.org/bxml">
-	<bxml:include src="mmdb.bxml"/>
+	<Border styles="{backgroundColor:4, padding:5}">
+		<bxml:include src="mmdb.bxml"/>
+	</Border>
 </Window>

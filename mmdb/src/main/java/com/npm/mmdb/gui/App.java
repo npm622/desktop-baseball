@@ -20,10 +20,11 @@ public class App implements Application
 	
 	public static void main(final String[ ] args)
 	{
-		System.setProperty("org.apache.pivot.wtk.skin.terra.location", "/com/npm/mmdb/bxml/themes/TerraTheme_dark.json");
+		System.setProperty("org.apache.pivot.wtk.skin.terra.location", "/com/npm/mmdb/bxml/themes/TerraTheme_mmdb.json");
 		DesktopApplicationContext.main(App.class, args);
 	}
 	
+	@Override
 	public void startup(final Display display, final Map<String, String> properties) throws Exception
 	{
 		setupDisplayWindow(display);
@@ -33,6 +34,7 @@ public class App implements Application
 		window.open(display);
 	}
 	
+	@Override
 	public boolean shutdown(final boolean arg0) throws Exception
 	{
 		if (window != null)
@@ -42,11 +44,13 @@ public class App implements Application
 		return false;
 	}
 	
+	@Override
 	public void suspend( ) throws Exception
 	{
 		
 	}
 	
+	@Override
 	public void resume( ) throws Exception
 	{
 		

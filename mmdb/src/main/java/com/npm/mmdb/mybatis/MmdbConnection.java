@@ -14,7 +14,7 @@ public class MmdbConnection
 	public static final SqlSessionFactory	SQL_SESSION_FACTORY;
 	static
 	{
-		String resource = "com/mmdb/mybatis/core/mybatis-config.xml";
+		String resource = "com/npm/mmdb/mybatis/mybatis-config.xml";
 		InputStream inputStream;
 		try
 		{

@@ -17,10 +17,17 @@
 {   font: "Verdana 11",
 
     colorMultiplier: 0.2,
-	
-	themeIsDark: true,
 
-    colors: ["#E1FFE1", "#1E1E1E", "#878787", "#4B4B4B", "#6AFF66", "#6AFF66", "#FEC578", "#FF666A"],
+    colors: [
+        "#e1ffe1",
+        "#1e1e1e",
+        "#878787",
+        "#5a5a5a",
+        "#6aff66",
+        "#6aff66",
+        "#fec578",
+        "#ff666a"
+    ],
 
     messageIcons: {
         error: "message_type-error-32x32.png",
