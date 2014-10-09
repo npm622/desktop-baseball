@@ -20,7 +20,7 @@
 		<setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString"/>
 	</settings> -->
 	<typeAliases>
-		<package name="com.mmdb.mybatis.bean"/>
+		<package name="com.npm.mmdb.mybatis.model"/>
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">
@@ -34,9 +34,7 @@
 		</environment>
 	</environments>
 	<mappers>
-		<mapper resource="com/mmdb/mybatis/mapper/GidMapper.xml"/>
-		<mapper resource="com/mmdb/mybatis/mapper/GidFileMapper.xml"/>
-		<!-- Select Mappers -->
-		<mapper resource="com/mmdb/mybatis/mapper/selects/GidSelects.xml"/>
+		<mapper resource="com/npm/mmdb/mybatis/mapper/GidMapper.xml"/>
+		<mapper resource="com/npm/mmdb/mybatis/mapper/GidFileMapper.xml"/>
 	</mappers>
 </configuration>

@@ -23,5 +23,8 @@
 			<property name="useActualColumnNames" value="false"/>
 			<!-- <generatedKey column="ID" sqlStatement="MYSQL" identity="true"/> -->
 		</table>
+		<table schema="mmdb" tableName="gid_file" domainObjectName="GidFile">
+			<property name="useActualColumnNames" value="false"/>
+		</table>
 	</context>
 </generatorConfiguration>
