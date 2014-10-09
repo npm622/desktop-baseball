@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+	PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+	"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	<classPathEntry location="/root/dev-tools/mysql/Connector J 5.1.30/mysql-connector-java-5.1.30-bin.jar"/>
+	<context id="MmdbJDBC" targetRuntime="MyBatis3">
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/mmdb" userId="root" password="okemo"/>
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false"/>
+		</javaTypeResolver>
+		<javaModelGenerator targetPackage="com.npm.mmdb.mybatis.model" targetProject="C:\root\repos\git\mmdb\mmdb\src\main\java">
+			<property name="enableSubPackages" value="true"/>
+			<!-- <property name="trimStrings" value="true"/> -->
+		</javaModelGenerator>
+		<sqlMapGenerator targetPackage="com.npm.mmdb.mybatis.map" targetProject="C:\root\repos\git\mmdb\mmdb\src\main\resources">
+			<property name="enableSubPackages" value="true"/>
+		</sqlMapGenerator>
+		<javaClientGenerator targetPackage="com.npm.mmdb.mybatis.dao" type="XMLMAPPER" targetProject="C:\root\repos\git\mmdb\mmdb\src\main\java">
+			<property name="enableSubPackages" value="true"/>
+		</javaClientGenerator>
+		<table schema="mmdb" tableName="gid" domainObjectName="Gid">
+			<property name="useActualColumnNames" value="false"/>
+			<!-- <generatedKey column="ID" sqlStatement="MYSQL" identity="true"/> -->
+		</table>
+	</context>
+</generatorConfiguration>

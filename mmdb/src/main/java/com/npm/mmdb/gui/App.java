@@ -20,13 +20,14 @@ public class App implements Application
 	
 	public static void main(final String[ ] args)
 	{
+		System.setProperty("org.apache.pivot.wtk.skin.terra.location", "/com/npm/mmdb/bxml/themes/TerraTheme_dark.json");
 		DesktopApplicationContext.main(App.class, args);
 	}
 	
 	public void startup(final Display display, final Map<String, String> properties) throws Exception
 	{
 		setupDisplayWindow(display);
-		
+
 		BXMLSerializer bxmlSerializer = new BXMLSerializer( );
 		window = (Window) bxmlSerializer.readObject(App.class, MAIN_FRAME_BXML);
 		window.open(display);
