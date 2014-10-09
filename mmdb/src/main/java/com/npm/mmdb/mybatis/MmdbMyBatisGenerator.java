@@ -1,8 +1,8 @@
 package com.npm.mmdb.mybatis;
 
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +21,9 @@ public class MmdbMyBatisGenerator
 	{
 		List<String> warnings = new ArrayList<>( );
 		boolean overwrite = true;
-		File configFile = new File(
-				"C:\\root\\repos\\git\\mmdb\\mmdb\\src\\main\\resources\\com\\npm\\mmdb\\mybatis\\mybatis-generator-config.xml");
+		InputStream is = ClassLoader.class.getResourceAsStream("/com/npm/mmdb/mybatis/mybatis-generator-config.xml");
 		ConfigurationParser cp = new ConfigurationParser(warnings);
-		Configuration config = cp.parseConfiguration(configFile);
+		Configuration config = cp.parseConfiguration(is);
 		DefaultShellCallback callback = new DefaultShellCallback(overwrite);
 		MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
 		myBatisGenerator.generate(null);
