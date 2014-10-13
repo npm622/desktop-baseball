@@ -3,28 +3,33 @@
 	PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
 	"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
+	<properties resource="com/npm/mmdb/mybatis/database.properties"/>
 	<classPathEntry location="/root/dev-tools/mysql/Connector J 5.1.30/mysql-connector-java-5.1.30-bin.jar"/>
-	<context id="MmdbJDBC" targetRuntime="MyBatis3">
-		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/mmdb" userId="root" password="okemo"/>
-		<javaTypeResolver>
+	<context id="MmdbJDBC" defaultModelType="conditional" targetRuntime="MyBatis3">
+		<plugin type="com.npm.mmdb.mybatis.generator.config.MmdbBuilderPlugin"/>
+		<plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+		<jdbcConnection driverClass="${database.driver}" connectionURL="${database.url}" userId="${database.username}" password="${database.password}"/>
+		<javaTypeResolver type="com.npm.mmdb.mybatis.generator.config.MmdbJavaTypeResolver">
 			<property name="forceBigDecimals" value="false"/>
 		</javaTypeResolver>
-		<javaModelGenerator targetPackage="com.npm.mmdb.mybatis.model" targetProject="C:\root\repos\git\mmdb\mmdb\src\main\java">
+		<javaModelGenerator targetPackage="com.npm.mmdb.mybatis.model" targetProject="mmdb/src/main/java">
+			<property name="immutable" value="true"/>
 			<property name="enableSubPackages" value="true"/>
-			<!-- <property name="trimStrings" value="true"/> -->
+			<property name="rootClass" value="com.npm.mmdb.mybatis.model.RootModel"/>
+			<property name="trimStrings" value="false"/>
 		</javaModelGenerator>
-		<sqlMapGenerator targetPackage="com.npm.mmdb.mybatis.map" targetProject="C:\root\repos\git\mmdb\mmdb\src\main\resources">
+		<sqlMapGenerator targetPackage="com.npm.mmdb.mybatis.map" targetProject="mmdb/src/main/resources">
 			<property name="enableSubPackages" value="true"/>
 		</sqlMapGenerator>
-	<!-- <javaClientGenerator targetPackage="com.npm.mmdb.mybatis.dao" type="XMLMAPPER" targetProject="C:\root\repos\git\mmdb\mmdb\src\main\java"> <property name="enableSubPackages" 
-		value="true"/> </javaClientGenerator> -->
-		<table schema="mmdb" tableName="gid" domainObjectName="Gid">
-			<property name="useActualColumnNames" value="false"/>
+		<javaClientGenerator type="XMLMAPPER" targetPackage="com.npm.mmdb.mybatis.dao" targetProject="mmdb\src\main\java">
+			<property name="enableSubPackages" value="true"/>
+			<!-- <property name="rootInterface" value="com.npm.mmdb.mybatis.dao.RootDao"/> -->
+		</javaClientGenerator>
+		<table schema="mmdb" tableName="gid" domainObjectName="gid.Gid">
 			<generatedKey column="id" sqlStatement="MySql" identity="true" type="post"/>
-			<!-- <generatedKey column="ID" sqlStatement="MYSQL" identity="true"/> -->
 		</table>
-		<table schema="mmdb" tableName="gid_file" domainObjectName="GidFile">
-			<property name="useActualColumnNames" value="false"/>
+		<table schema="mmdb" tableName="gid_file" domainObjectName="gid.GidFile">
+			<generatedKey column="id" sqlStatement="MySql" identity="true" type="post"/>
 		</table>
 	</context>
 </generatorConfiguration>

@@ -2,4 +2,5 @@
 	xmlns:gui="com.npm.mmdb.gui.core">
 	<!-- <ActivityIndicator bxml:id="bottomlineActivityIndicator"/> -->
 	<Label bxml:id="bottomlineLabel" text="bottomline"/>
+	<PushButton bxml:id="testButton" buttonData="test"/>
 </gui:Bottomline>

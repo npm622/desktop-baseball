@@ -9,7 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import com.npm.mmdb.mybatis.MmdbConnection;
 
 
-public class DbQuery<M extends MyBatisGeneratedDao<T, PK, E>, T, PK extends Serializable, E> implements MyBatisGeneratedDao<T, PK, E>
+public class DbQuery<M extends RootDao<T, PK, E>, T, PK extends Serializable, E> implements RootDao<T, PK, E>
 {
 	private final Class<M>	clazz;
 	

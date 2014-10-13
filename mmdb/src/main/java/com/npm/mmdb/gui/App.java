@@ -17,7 +17,7 @@ public class App implements Application
 	private static final Dimension	DIM_1728_972	= new Dimension(1728, 972);
 	
 	private Window					window			= null;
-	
+
 	public static void main(final String[ ] args)
 	{
 		System.setProperty("org.apache.pivot.wtk.skin.terra.location", "/com/npm/mmdb/bxml/themes/TerraTheme_mmdb.json");

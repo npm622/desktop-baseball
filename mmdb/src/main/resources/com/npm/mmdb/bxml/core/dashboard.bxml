@@ -1,7 +1,7 @@
 <gui:Dashboard bxml:id="dashboard" xmlns="org.apache.pivot.wtk" xmlns:bxml="http://pivot.apache.org/bxml" xmlns:gui="com.npm.mmdb.gui.core">
-	<!-- <bxml:include bxml:id="mmdbHomeScreen" src="home/mmdb-home-screen.bxml" inline="true"/>
-	<bxml:include bxml:id="fileManagerScreen" src="home/file-manager-screen.bxml" inline="true"/>
-	<bxml:include bxml:id="db2Screen" src="home/db-2-screen.bxml" inline="true"/>
+	<bxml:include bxml:id="mmdbHomeScreen" src="../home/mmdb-home-screen.bxml" inline="true"/>
+	<bxml:include bxml:id="gd2MlbScreen" src="../home/gd2-mlb-screen.bxml" inline="true"/>
+	<!-- <bxml:include bxml:id="db2Screen" src="home/db-2-screen.bxml" inline="true"/>
 	<bxml:include bxml:id="standingsScreen" src="standings/standings-screen.bxml" inline="true"/>
 	<bxml:include bxml:id="standingsArchivesScreen" src="standings/standings-archives-screen.bxml" inline="true"/>
 	<bxml:include bxml:id="standingsProjectionsScreen" src="standings/standings-projections-screen.bxml" inline="true"/>
@@ -14,5 +14,5 @@
 	<bxml:include bxml:id="fantasyScreen" src="performance/fantasy-screen.bxml" inline="true"/>
 	<bxml:include bxml:id="performanceArchivesScreen" src="performance/performance-archives-screen.bxml" inline="true"/>
 	<bxml:include bxml:id="performanceProjectionsScreen" src="performance/performance-projections-screen.bxml" inline="true"/> -->
-	<Label text="dashboard"/>
+	<Label bxml:id="dummyLabel" text="dashboard"/>
 </gui:Dashboard>

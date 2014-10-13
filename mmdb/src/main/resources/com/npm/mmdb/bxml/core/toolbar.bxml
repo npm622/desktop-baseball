@@ -15,8 +15,9 @@
 			</TablePane.Row>
 			<TablePane.Row height="5*">
 				<FillPane>
-					<!-- <BoxPane bxml:id="contextPane" styles="{padding:'0', verticalAlignment:'center', horizontalAlignment:'right'}"/> -->
-					<Label text="context"/>
+					<BoxPane styles="{padding:5, horizontalAlignment:'right', verticalAlignment:'center'}">
+						<LinkButton bxml:id="contextLink" buttonData="mmdb-home" styles="{color:'#7d8aff'}"/>
+					</BoxPane>
 				</FillPane>
 			</TablePane.Row>
 		</TablePane>
@@ -26,8 +27,7 @@
 			</columns>
 			<TablePane.Row height="5*">
 				<FillPane>
-					<!-- <BoxPane bxml:id="breadcrumbPane" styles="{padding:'20', spacing:'20', verticalAlignment:'center'}"/> -->
-					<Label text="breadcrumb"/>
+					<BoxPane bxml:id="breadcrumbPane" styles="{padding:5, spacing:20, verticalAlignment:'center'}"/>
 				</FillPane>
 			</TablePane.Row>
 			<TablePane.Row height="8*">
@@ -42,19 +42,14 @@
 							<bxml:define>
 								<ButtonGroup bxml:id="buttonRowGroup"/>
 							</bxml:define>
-							<FillPane>
-								<PushButton bxml:id="standingsButton" buttonData="standings" toggleButton="true" buttonGroup="$buttonRowGroup"/>
-								<PushButton bxml:id="scheduleButton" buttonData="schedule" toggleButton="true" buttonGroup="$buttonRowGroup"/>
-								<PushButton bxml:id="performanceButton" buttonData="performance" toggleButton="true" buttonGroup="$buttonRowGroup"/>
-							</FillPane>
+							<FillPane bxml:id="contextPane" styles="{padding:5}"/>
 						</TablePane.Row>
 					</TablePane>
 				</FillPane>
 			</TablePane.Row>
 			<TablePane.Row height="5*">
 				<FillPane>
-					<!-- <BoxPane bxml:id="actionLinksPane" styles="{padding:'20', spacing:'20', verticalAlignment:'center'}"/> -->
-					<Label text="actionLinks"/>
+					<BoxPane bxml:id="actionPane" styles="{padding:5, spacing:20, verticalAlignment:'center'}"/>
 				</FillPane>
 			</TablePane.Row>
 		</TablePane>

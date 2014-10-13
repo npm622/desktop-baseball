@@ -1,0 +1,55 @@
+<gui:Gd2MlbScreen xmlns="org.apache.pivot.wtk" xmlns:bxml="http://pivot.apache.org/bxml" xmlns:gui="com.npm.mmdb.gui.home">
+	<columns>
+		<TablePane.Column width="1*"/>
+		<TablePane.Column width="1*"/>
+		<TablePane.Column width="1*"/>
+	</columns>
+	<TablePane.Row height="60*">
+		<Label text="download"/>
+		<Label text="read"/>
+		<Label text="upload"/>
+	</TablePane.Row>
+	<TablePane.Row height="750*">
+		<TablePane>
+			<columns>
+				<TablePane.Column width="1*"/>
+			</columns>
+			<TablePane.Row height="-1">
+				<TablePane>
+					<columns>
+						<TablePane.Column width="1*"/>
+						<TablePane.Column width="-1"/>
+					</columns>
+					<TablePane.Row height="-1">
+						<PushButton buttonData="refresh years"/>
+						<BoxPane styles="{horizontalAlignment:'right'}">
+							<PushButton buttonData="fetch..."/>
+						</BoxPane>
+					</TablePane.Row>
+					<TablePane.Row height="-1">
+						<BoxPane>
+							<Label text="db date:"/>
+							<Label text="dbDataLabel"/>
+						</BoxPane>
+						<BoxPane>
+							<Label text="internet:"/>
+							<Label text="interentStatusLabel"/>
+						</BoxPane>
+					</TablePane.Row>
+				</TablePane>
+			</TablePane.Row>
+			<TablePane.Row height="16*">
+				<bxml:define>
+					<ButtonGroup bxml:id="yearButtonGroup"/>
+					<ButtonGroup bxml:id="monthButtonGroup"/>
+					<ButtonGroup bxml:id="dayButtonGroup"/>
+				</bxml:define>
+				<Accordion>
+					<TablePane bxml:id="yearAccordionPane" Accordion.headerData="year"/>
+					<TablePane bxml:id="monthAccordionPane" Accordion.headerData="month"/>
+					<TablePane bxml:id="dayAccordionPane" Accordion.headerData="day"/>
+				</Accordion>
+			</TablePane.Row>
+		</TablePane>
+	</TablePane.Row>
+</gui:Gd2MlbScreen>

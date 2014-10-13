@@ -7,7 +7,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 
-public interface MyBatisGeneratedDao<T, PK extends Serializable, E>
+public interface RootDao<T, PK extends Serializable, E>
 {
 	int countByExample(E example);
 	
