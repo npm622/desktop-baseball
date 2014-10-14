@@ -12,19 +12,39 @@ import org.apache.pivot.wtk.CardPane;
 import org.apache.pivot.wtk.Component;
 
 import com.npm.mmdb.gui.admin.DashboardScreen;
+import com.npm.mmdb.gui.home.Db2Screen;
 import com.npm.mmdb.gui.home.Gd2MlbScreen;
 import com.npm.mmdb.gui.home.MmdbHomeScreen;
+import com.npm.mmdb.gui.performance.FantasyScreen;
+import com.npm.mmdb.gui.performance.GameLogScreen;
+import com.npm.mmdb.gui.performance.PerformanceScreen;
+import com.npm.mmdb.gui.schedule.GameViewerScreen;
+import com.npm.mmdb.gui.schedule.PlayByPlayScreen;
+import com.npm.mmdb.gui.schedule.ScheduleScreen;
+import com.npm.mmdb.gui.standings.StandingsScreen;
+import com.npm.mmdb.gui.standings.TeamViewerScreen;
 
 
 public class Dashboard extends CardPane implements Bindable
 {
-	@BXML private MmdbHomeScreen	mmdbHomeScreen	= null;
-	@BXML private Gd2MlbScreen		gd2MlbScreen	= null;
+	@BXML private MmdbHomeScreen	mmdbHomeScreen		= null;
+	@BXML private Gd2MlbScreen		gd2MlbScreen		= null;
+	@BXML private Db2Screen			db2Screen			= null;
+	
+	@BXML private StandingsScreen	standingsScreen		= null;
+	@BXML private TeamViewerScreen	teamViewerScreen	= null;
+	
+	@BXML private ScheduleScreen	scheduleScreen		= null;
+	@BXML private GameViewerScreen	gameViewerScreen	= null;
+	@BXML private PlayByPlayScreen	playByPlayScreen	= null;
+	
+	@BXML private PerformanceScreen	performanceScreen	= null;
+	@BXML private GameLogScreen		gameLogScreen		= null;
+	@BXML private FantasyScreen		fantasyScreen		= null;
 
 	@Override
 	public void initialize(final Map<String, Object> namespace, final URL location, final Resources resources)
 	{
-		// TODO Auto-generated method stub
 		
 	}
 	
@@ -34,18 +54,6 @@ public class Dashboard extends CardPane implements Bindable
 		for (Iterator<Component> compIter = iterator( ) ; compIter.hasNext( ) ; index++)
 		{
 			Component comp = compIter.next( );
-			if (comp == null)
-			{
-				System.out.println("say hey! null values");
-			}
-			else if (comp.getName( ) == null)
-			{
-				System.out.println("comp.getName( ) returns a null");
-			}
-			else
-			{
-				System.out.println(comp.getName( ));
-			}
 			if (comp.getName( ).equals(newScreen.toJavaString( ) + "Screen"))
 			{
 				setSelectedIndex(index);

@@ -1,18 +1,13 @@
 <gui:Dashboard bxml:id="dashboard" xmlns="org.apache.pivot.wtk" xmlns:bxml="http://pivot.apache.org/bxml" xmlns:gui="com.npm.mmdb.gui.core">
 	<bxml:include bxml:id="mmdbHomeScreen" src="../home/mmdb-home-screen.bxml" inline="true"/>
 	<bxml:include bxml:id="gd2MlbScreen" src="../home/gd2-mlb-screen.bxml" inline="true"/>
-	<!-- <bxml:include bxml:id="db2Screen" src="home/db-2-screen.bxml" inline="true"/>
-	<bxml:include bxml:id="standingsScreen" src="standings/standings-screen.bxml" inline="true"/>
-	<bxml:include bxml:id="standingsArchivesScreen" src="standings/standings-archives-screen.bxml" inline="true"/>
-	<bxml:include bxml:id="standingsProjectionsScreen" src="standings/standings-projections-screen.bxml" inline="true"/>
-	<bxml:include bxml:id="scheduleScreen" src="schedule/schedule-screen.bxml" inline="true"/>
-	<bxml:include bxml:id="gameViewerScreen" src="schedule/game-viewer-screen.bxml" inline="true"/>
-	<bxml:include bxml:id="playByPlayScreen" src="schedule/play-by-play-screen.bxml" inline="true"/>
-	<bxml:include bxml:id="gd2MlbScreen" src="schedule/gd2-mlb-screen.bxml" inline="true"/>
-	<bxml:include bxml:id="performanceScreen" src="performance/performance-screen.bxml" inline="true"/>
-	<bxml:include bxml:id="gameLogScreen" src="performance/game-log-screen.bxml" inline="true"/>
-	<bxml:include bxml:id="fantasyScreen" src="performance/fantasy-screen.bxml" inline="true"/>
-	<bxml:include bxml:id="performanceArchivesScreen" src="performance/performance-archives-screen.bxml" inline="true"/>
-	<bxml:include bxml:id="performanceProjectionsScreen" src="performance/performance-projections-screen.bxml" inline="true"/> -->
-	<Label bxml:id="dummyLabel" text="dashboard"/>
+	<bxml:include bxml:id="db2Screen" src="../home/db-2-screen.bxml" inline="true"/>
+	<bxml:include bxml:id="standingsScreen" src="../standings/standings-screen.bxml" inline="true"/>
+	<bxml:include bxml:id="team-viewer" src="../standings/team-viewer-screen.bxml" inline="true"/>
+	<bxml:include bxml:id="scheduleScreen" src="../schedule/schedule-screen.bxml" inline="true"/>
+	<bxml:include bxml:id="gameViewerScreen" src="../schedule/game-viewer-screen.bxml" inline="true"/>
+	<bxml:include bxml:id="playByPlayScreen" src="../schedule/play-by-play-screen.bxml" inline="true"/>
+	<bxml:include bxml:id="performanceScreen" src="../performance/performance-screen.bxml" inline="true"/>
+	<bxml:include bxml:id="gameLogScreen" src="../performance/game-log-screen.bxml" inline="true"/>
+	<bxml:include bxml:id="fantasyScreen" src="../performance/fantasy-screen.bxml" inline="true"/>
 </gui:Dashboard>

@@ -1,0 +1,8 @@
+<gui:ScheduleScreen xmlns="org.apache.pivot.wtk" xmlns:bxml="http://pivot.apache.org/bxml" xmlns:gui="com.npm.mmdb.gui.schedule" styles="{padding:5}">
+	<columns>
+		<TablePane.Column width="1*"/>
+	</columns>
+	<TablePane.Row height="1*">
+		<Label text="ScheduleScreen"/>
+	</TablePane.Row>
+</gui:ScheduleScreen>

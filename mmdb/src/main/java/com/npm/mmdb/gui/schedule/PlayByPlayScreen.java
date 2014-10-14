@@ -1,4 +1,4 @@
-package com.npm.mmdb.gui.home;
+package com.npm.mmdb.gui.schedule;
 
 import java.net.URL;
 
@@ -7,7 +7,7 @@ import org.apache.pivot.collections.Map;
 import org.apache.pivot.util.Resources;
 import org.apache.pivot.wtk.TablePane;
 
-public class MmdbHomeScreen extends TablePane implements Bindable
+public class PlayByPlayScreen extends TablePane implements Bindable
 {
 	
 	@Override

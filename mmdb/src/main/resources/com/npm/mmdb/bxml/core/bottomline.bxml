@@ -1,6 +1,5 @@
 <gui:Bottomline bxml:id="bottomline" xmlns="org.apache.pivot.wtk" xmlns:bxml="http://pivot.apache.org/bxml"
-	xmlns:gui="com.npm.mmdb.gui.core">
-	<!-- <ActivityIndicator bxml:id="bottomlineActivityIndicator"/> -->
+	xmlns:gui="com.npm.mmdb.gui.core" styles="{padding:5}">
+	<ActivityIndicator bxml:id="bottomlineActivityIndicator"/>
 	<Label bxml:id="bottomlineLabel" text="bottomline"/>
-	<PushButton bxml:id="testButton" buttonData="test"/>
 </gui:Bottomline>

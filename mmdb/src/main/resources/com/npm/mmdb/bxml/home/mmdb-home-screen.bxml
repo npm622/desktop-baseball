@@ -1,4 +1,4 @@
-<gui:MmdbHomeScreen xmlns="org.apache.pivot.wtk" xmlns:bxml="http://pivot.apache.org/bxml" xmlns:gui="com.npm.mmdb.gui.home">
+<gui:MmdbHomeScreen xmlns="org.apache.pivot.wtk" xmlns:bxml="http://pivot.apache.org/bxml" xmlns:gui="com.npm.mmdb.gui.home" styles="{padding:5}">
 	<columns>
 		<TablePane.Column width="1068*"/>
 		<TablePane.Column width="660*"/>

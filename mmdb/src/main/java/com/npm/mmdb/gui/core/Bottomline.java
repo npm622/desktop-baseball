@@ -8,32 +8,62 @@ import org.apache.pivot.beans.Bindable;
 import org.apache.pivot.collections.Map;
 import org.apache.pivot.util.Resources;
 import org.apache.pivot.wtk.Action;
+import org.apache.pivot.wtk.ActivityIndicator;
+import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.FlowPane;
 import org.apache.pivot.wtk.Label;
-import org.apache.pivot.wtk.PushButton;
+import org.apache.pivot.wtk.Menu;
+import org.apache.pivot.wtk.MenuHandler;
+import org.apache.pivot.wtk.Prompt;
+
+import com.npm.mmdb.gui.Mmdb;
+import com.npm.mmdb.gui.admin.DashboardScreen;
 
 
 public class Bottomline extends FlowPane implements Bindable
 {
-	@BXML private Label			bottomlineLabel	= null;
-	@BXML private PushButton	testButton		= null;
+	private Mmdb					parent						= null;
+
+	@BXML private ActivityIndicator	bottomlineActivityIndicator	= null;
+	@BXML private Label				bottomlineLabel				= null;
 	
 	@Override
 	public void initialize(final Map<String, Object> arg0, final URL arg1, final Resources arg2)
 	{
-		// TODO Auto-generated method stub
-		
 	}
 	
-	public void setActions(final Action... actions)
+	public final void startupBottomline(final Mmdb iParent)
 	{
-		int i = 0;
-		for (Action action : actions)
+		parent = iParent;
+		parent.setMenuHandler(createMenuHandler( ));
+	}
+	
+	private final MenuHandler createMenuHandler( )
+	{
+		return new MenuHandler.Adapter( )
 		{
-			if (i++ == 0)
+			@Override
+			public boolean configureContextMenu(final Component component, final Menu menu, final int x, final int y)
 			{
-				testButton.setAction(action);
+				Menu.Section menuSection = new Menu.Section( );
+				menu.getSections( ).add(menuSection);
+				Menu.Item menuItem = new Menu.Item("execute...");
+				menuItem.setAction(new Action( )
+				{
+					@Override
+					public void perform(final Component source)
+					{
+						Prompt.prompt("action executed", parent);
+					}
+				});
+				menuSection.add(menuItem);
+				return false;
 			}
-		}
+		};
+	}
+	
+	public final void updateScreen(final DashboardScreen newScreen)
+	{
+		bottomlineLabel.setText("viewing " + newScreen.toString( ) + " screen");
 	}
 }

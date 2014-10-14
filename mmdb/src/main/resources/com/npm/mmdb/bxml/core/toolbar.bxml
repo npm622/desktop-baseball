@@ -10,7 +10,7 @@
 			</columns>
 			<TablePane.Row height="13*">
 				<FillPane>
-					<ImageView bxml:id="logo" image="/com/npm/mmdb/images/mmdb-logo-v0.1.png" styles="{fill:'false', horizontalAlignment:'center', verticalAlignment:'center'}"/>
+					<ImageView bxml:id="logo" image="/com/npm/mmdb/images/mmdb-logo-v0.1.png" styles="{horizontalAlignment:'center', verticalAlignment:'center'}"/>
 				</FillPane>
 			</TablePane.Row>
 			<TablePane.Row height="5*">
