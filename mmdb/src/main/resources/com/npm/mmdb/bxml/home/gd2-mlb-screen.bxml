@@ -44,11 +44,10 @@
 					</TablePane.Row>
 					<TablePane.Row height="-1">
 						<BoxPane>
-							<Label text="db date:"/>
-							<Label bxml:id="dbDateLabel" text="dbDataLabel"/>
+							<Label text="db as of:"/>
+							<Label bxml:id="dbDateLabel" text="dbDateLabel"/>
 						</BoxPane>
 						<BoxPane>
-							<Label text="internet:"/>
 							<Label bxml:id="internetStatusLabel" text="interentStatusLabel"/>
 						</BoxPane>
 					</TablePane.Row>

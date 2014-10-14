@@ -25,6 +25,56 @@ public class MmdbPrinter
 		return SDF.format(new Date( )) + message;
 	}
 	
+	public static final String twoDigits(final Integer num)
+	{
+		if (num == null || num.intValue( ) < 0 || num.intValue( ) > 99)
+		{
+			throw new IllegalArgumentException("cannot form two digit numeral with " + num);
+		}
+		if (num.intValue( ) < 10)
+		{
+			return "0" + num;
+		}
+		else
+		{
+			return String.valueOf(num);
+		}
+	}
+	
+	public static final String fourDigits(final Integer num)
+	{
+		if (num == null || num.intValue( ) < -999 || num.intValue( ) > 9999)
+		{
+			throw new IllegalArgumentException("cannot form four digit numeral with " + num);
+		}
+		if (num.intValue( ) < -99 || num.intValue( ) > 999)
+		{
+			return String.valueOf(num);
+		}
+		else if (num.intValue( ) < -9 || num.intValue( ) > 99)
+		{
+			if (num.intValue( ) < 0)
+			{
+				return "-0" + Math.abs(num.intValue( ));
+			}
+			else
+			{
+				return "00" + num;
+			}
+		}
+		else
+		{
+			if (num.intValue( ) < 0)
+			{
+				return "-00" + Math.abs(num.intValue( ));
+			}
+			else
+			{
+				return "000" + num;
+			}
+		}
+	}
+
 	public static final String formatXml(final Document xml)
 	{
 		TransformerFactory tf = TransformerFactory.newInstance( );

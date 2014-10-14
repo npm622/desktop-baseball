@@ -39,6 +39,7 @@ public class Mmdb extends Window implements Bindable
 			Action.getNamedActions( ).put(screen.toString( ), screen.getLoadAction( ));
 		}
 		toolbar.startupToolbar(this);
+		dashboard.startupDashboard( );
 		bottomline.startupBottomline(this);
 		Action.getNamedActions( ).get(DashboardScreen.MMDB_HOME.toString( )).perform(this);
 	}

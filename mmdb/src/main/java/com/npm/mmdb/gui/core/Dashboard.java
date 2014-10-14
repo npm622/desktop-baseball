@@ -48,6 +48,11 @@ public class Dashboard extends CardPane implements Bindable
 		
 	}
 	
+	public final void startupDashboard( )
+	{
+		gd2MlbScreen.startupGd2MlbScreen( );
+	}
+
 	public final void updateScreen(final DashboardScreen newScreen)
 	{
 		int index = 0;

@@ -12,6 +12,8 @@ import org.apache.pivot.wtk.ImageView;
 import org.apache.pivot.wtk.Label;
 import org.apache.pivot.wtk.TablePane;
 
+import com.npm.mmdb.utility.WebMlb;
+
 
 public class Gd2MlbScreen extends TablePane implements Bindable
 {
@@ -38,4 +40,18 @@ public class Gd2MlbScreen extends TablePane implements Bindable
 		
 	}
 	
+	public final void startupGd2MlbScreen( )
+	{
+		if (WebMlb.hasInternetConnection( ))
+		{
+			internetStatusLabel.setText("internet connected");
+			internetStatusLabel.getStyles( ).put("color", Integer.valueOf(17));
+		}
+		else
+		{
+			internetStatusLabel.setText("internet not connected");
+			internetStatusLabel.getStyles( ).put("color", Integer.valueOf(20));
+		}
+	}
+
 }
