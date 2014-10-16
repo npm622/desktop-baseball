@@ -23,14 +23,11 @@ import org.apache.pivot.wtk.LinkButton;
 import org.apache.pivot.wtk.PushButton;
 import org.apache.pivot.wtk.TablePane;
 
-import com.npm.mmdb.gui.Mmdb;
 import com.npm.mmdb.gui.admin.DashboardScreen;
 
 
 public class Toolbar extends TablePane implements Bindable
 {
-	private Mmdb				parent			= null;
-	
 	@BXML private ImageView		logo			= null;
 	@BXML private BoxPane		breadcrumbPane	= null;
 	@BXML private ButtonGroup	buttonRowGroup	= null;
@@ -44,9 +41,8 @@ public class Toolbar extends TablePane implements Bindable
 	{
 	}
 	
-	public final void startupToolbar(final Mmdb iParent)
+	public final void startupToolbar( )
 	{
-		parent = iParent;
 		initLogo( );
 		initBreadcrumbPane( );
 		initButtonRowGroup( );
@@ -130,7 +126,7 @@ public class Toolbar extends TablePane implements Bindable
 			public boolean mouseClick(final Component component, final org.apache.pivot.wtk.Mouse.Button button,
 					final int x, final int y, final int count)
 			{
-				Action.getNamedActions( ).get(DashboardScreen.MMDB_HOME.toString( )).perform(parent);
+				Action.getNamedActions( ).get(DashboardScreen.MMDB_HOME.toString( )).perform(Toolbar.this);
 				return super.mouseClick(component, button, x, y, count);
 			}
 		});
@@ -143,7 +139,7 @@ public class Toolbar extends TablePane implements Bindable
 			@Override
 			public void selectionChanged(final ButtonGroup buttonGroup, final Button previousSelection)
 			{
-				Action.getNamedActions( ).get(extractButtonRowData(buttonGroup.getSelection( ))).perform(parent);
+				Action.getNamedActions( ).get(extractButtonRowData(buttonGroup.getSelection( ))).perform(Toolbar.this);
 			}
 		});
 	}
@@ -170,7 +166,8 @@ public class Toolbar extends TablePane implements Bindable
 			public boolean mouseClick(final Component component, final org.apache.pivot.wtk.Mouse.Button button,
 					final int x, final int y, final int count)
 			{
-				Action.getNamedActions( ).get(extractButtonRowData(buttonRowGroup.getSelection( ))).perform(parent);
+				Action.getNamedActions( ).get(extractButtonRowData(buttonRowGroup.getSelection( )))
+						.perform(Toolbar.this);
 				return super.mouseClick(component, button, x, y, count);
 			}
 		});

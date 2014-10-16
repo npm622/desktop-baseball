@@ -8,14 +8,17 @@ import org.apache.pivot.collections.Map;
 import org.apache.pivot.util.Resources;
 import org.apache.pivot.wtk.TablePane;
 
-import com.npm.mmdb.gui.Mmdb;
-import com.npm.mmdb.gui.home.listener.Gd2MlbScreenListener;
+import com.npm.mmdb.gui.core.Dashboard.DashboardListener;
 
 
 public class Gd2Uploader extends TablePane implements Bindable
 {
-	private Mmdb					parent				= null;
-	private Gd2MlbScreenListener	listener			= null;
+	public interface Gd2UploaderListener extends DashboardListener
+	{
+		public void setActivePane( );
+	}
+	
+	private Gd2UploaderListener	listener;
 
 	@Override
 	public void initialize(final Map<String, Object> arg0, final URL arg1, final Resources arg2)
@@ -24,12 +27,12 @@ public class Gd2Uploader extends TablePane implements Bindable
 		
 	}
 	
-	public final void startupGd2Uploader(final Mmdb iParent)
+	public final void startupGd2Uploader( )
 	{
-		parent = iParent;
+
 	}
 
-	public final void setGd2MlbScreenListener(final Gd2MlbScreenListener listener)
+	public final void setListener(final Gd2UploaderListener listener)
 	{
 		this.listener = listener;
 	}

@@ -17,8 +17,8 @@ import org.apache.pivot.wtk.Window;
 import com.npm.mmdb.gui.admin.DashboardScreen;
 import com.npm.mmdb.gui.core.Bottomline;
 import com.npm.mmdb.gui.core.Dashboard;
+import com.npm.mmdb.gui.core.Dashboard.DashboardListener;
 import com.npm.mmdb.gui.core.Toolbar;
-import com.npm.mmdb.gui.core.listener.DashboardListener;
 
 
 public class Mmdb extends Window implements Bindable
@@ -43,9 +43,9 @@ public class Mmdb extends Window implements Bindable
 			getActionMappings( ).add(new ActionMapping(screen.getKeyStroke( ), screen.getLoadAction( )));
 			Action.getNamedActions( ).put(screen.toString( ), screen.getLoadAction( ));
 		}
-		toolbar.startupToolbar(this);
-		dashboard.startupDashboard(this);
-		bottomline.startupBottomline(this);
+		toolbar.startupToolbar( );
+		dashboard.startupDashboard( );
+		bottomline.startupBottomline( );
 		Action.getNamedActions( ).get(DashboardScreen.MMDB_HOME.toString( )).perform(this);
 	}
 	

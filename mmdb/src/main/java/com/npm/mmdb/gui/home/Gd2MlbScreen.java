@@ -7,19 +7,32 @@ import org.apache.pivot.beans.BXML;
 import org.apache.pivot.beans.Bindable;
 import org.apache.pivot.collections.Map;
 import org.apache.pivot.util.Resources;
+import org.apache.pivot.util.concurrent.Task;
+import org.apache.pivot.util.concurrent.TaskListener;
 import org.apache.pivot.wtk.ImageView;
 import org.apache.pivot.wtk.TablePane;
 
-import com.npm.mmdb.gui.Mmdb;
+import com.npm.mmdb.gui.core.Dashboard.DashboardListener;
 import com.npm.mmdb.gui.home.gd2.Gd2Downloader;
+import com.npm.mmdb.gui.home.gd2.Gd2Downloader.Gd2DownloaderListener;
 import com.npm.mmdb.gui.home.gd2.Gd2Reader;
+import com.npm.mmdb.gui.home.gd2.Gd2Reader.Gd2ReaderListener;
 import com.npm.mmdb.gui.home.gd2.Gd2Uploader;
-import com.npm.mmdb.gui.home.listener.Gd2MlbScreenListener;
+import com.npm.mmdb.gui.home.gd2.Gd2Uploader.Gd2UploaderListener;
 
 
 public class Gd2MlbScreen extends TablePane implements Bindable
 {
-	private Mmdb					parent				= null;
+	public interface Gd2MlbScreenListener extends DashboardListener
+	{
+		
+	}
+	
+	public enum Gd2MlbPane
+	{
+		DOWNLOAD, READ, UPLOAD;
+	}
+
 	private Gd2MlbScreenListener	listener			= null;
 	
 	@BXML private ImageView			gd2DownloadActive	= null;
@@ -38,17 +51,116 @@ public class Gd2MlbScreen extends TablePane implements Bindable
 		
 	}
 	
-	public final void startupGd2MlbScreen(final Mmdb iParent)
+	public final void startupGd2MlbScreen( )
 	{
-		parent = iParent;
-		gd2Downloader.startupGd2Downloader(iParent);
-		// gd2Reader.startupGd2Reader(iParent);
-		// gd2Uploader.startupGd2Uploader(iParent);
+		gd2Downloader.startupGd2Downloader( );
+		// gd2Reader.startupGd2Reader();
+		// gd2Uploader.startupGd2Uploader();
 	}
 	
-	public final void setGd2MlbScreenListener(final Gd2MlbScreenListener listener)
+	private final void updatePaneBar(final Gd2MlbPane activePane)
 	{
-		this.listener = listener;
-		gd2Downloader.setGd2MlbScreenListener(listener);
+		switch (activePane)
+		{
+			case DOWNLOAD:
+				setDownloadActive(true);
+				setReadActive(false);
+				setUploadActive(false);
+				break;
+			case READ:
+				setDownloadActive(false);
+				setReadActive(true);
+				setUploadActive(false);
+				break;
+			case UPLOAD:
+				setDownloadActive(false);
+				setReadActive(false);
+				setUploadActive(true);
+				break;
+		}
+	}
+	
+	private final void setDownloadActive(final boolean isActive)
+	{
+		gd2DownloadActive.setVisible(isActive);
+		gd2DownloadInactive.setVisible(!isActive);
+	}
+	
+	private final void setReadActive(final boolean isActive)
+	{
+		gd2ReadActive.setVisible(isActive);
+		gd2ReadInactive.setVisible(!isActive);
+	}
+	
+	private final void setUploadActive(final boolean isActive)
+	{
+		gd2UploadActive.setVisible(isActive);
+		gd2UploadInactive.setVisible(!isActive);
+	}
+
+	public final void setListener(final Gd2MlbScreenListener iListener)
+	{
+		listener = iListener;
+		gd2Downloader.setListener(new Gd2DownloaderListener( )
+		{
+			@Override
+			public <T> void backgroundTaskRequested(final Task<T> task, final TaskListener<T> taskListener)
+			{
+				listener.backgroundTaskRequested(task, taskListener);
+			}
+			
+			@Override
+			public void sendToBottomline(final String message)
+			{
+				listener.sendToBottomline(message);
+			}
+			
+			@Override
+			public void setActivePane( )
+			{
+				updatePaneBar(Gd2MlbPane.DOWNLOAD);
+			}
+		});
+		gd2Reader.setListener(new Gd2ReaderListener( )
+		{
+			@Override
+			public void sendToBottomline(final String message)
+			{
+				listener.sendToBottomline(message);
+				
+			}
+			
+			@Override
+			public <T> void backgroundTaskRequested(final Task<T> task, final TaskListener<T> taskListener)
+			{
+				listener.backgroundTaskRequested(task, taskListener);
+			}
+			
+			@Override
+			public void setActivePane( )
+			{
+				updatePaneBar(Gd2MlbPane.READ);
+			}
+		});
+		gd2Uploader.setListener(new Gd2UploaderListener( )
+		{
+			@Override
+			public void sendToBottomline(final String message)
+			{
+				listener.sendToBottomline(message);
+			}
+			
+			@Override
+			public <T> void backgroundTaskRequested(final Task<T> task, final TaskListener<T> taskListener)
+			{
+				listener.backgroundTaskRequested(task, taskListener);
+			}
+			
+			@Override
+			public void setActivePane( )
+			{
+				updatePaneBar(Gd2MlbPane.UPLOAD);
+			}
+		});
 	}
 }

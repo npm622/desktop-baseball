@@ -16,15 +16,17 @@ import org.apache.pivot.wtk.Menu;
 import org.apache.pivot.wtk.MenuHandler;
 import org.apache.pivot.wtk.Prompt;
 
-import com.npm.mmdb.gui.Mmdb;
 import com.npm.mmdb.gui.admin.DashboardScreen;
 import com.npm.mmdb.utility.MmdbPrinter;
 
 
 public class Bottomline extends BoxPane implements Bindable
 {
-	private Mmdb					parent						= null;
+	public interface BottomlineListener
+	{
 
+	}
+	
 	@BXML private ActivityIndicator	bottomlineActivityIndicator	= null;
 	@BXML private Label				bottomlineLabel				= null;
 	
@@ -33,10 +35,9 @@ public class Bottomline extends BoxPane implements Bindable
 	{
 	}
 	
-	public final void startupBottomline(final Mmdb iParent)
+	public final void startupBottomline( )
 	{
-		parent = iParent;
-		parent.setMenuHandler(createMenuHandler( ));
+		setMenuHandler(createMenuHandler( ));
 	}
 	
 	private final MenuHandler createMenuHandler( )
@@ -54,7 +55,7 @@ public class Bottomline extends BoxPane implements Bindable
 					@Override
 					public void perform(final Component source)
 					{
-						Prompt.prompt("action executed", parent);
+						Prompt.prompt("action executed", Bottomline.this.getWindow( ));
 					}
 				});
 				menuSection.add(menuItem);

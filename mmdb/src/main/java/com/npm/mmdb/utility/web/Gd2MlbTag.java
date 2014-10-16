@@ -1,7 +1,9 @@
-package com.npm.mmdb.utility;
+package com.npm.mmdb.utility.web;
 
 
 import com.npm.mmdb.mybatis.model.gid.Gid;
+import com.npm.mmdb.utility.BoolChecker;
+import com.npm.mmdb.utility.MmdbPrinter;
 
 
 public enum Gd2MlbTag

@@ -1,4 +1,4 @@
-package com.npm.mmdb.utility;
+package com.npm.mmdb.utility.web;
 
 
 import java.io.IOException;
@@ -12,6 +12,7 @@ import com.npm.mmdb.mybatis.model.gid.Gid;
 import com.npm.mmdb.mybatis.model.gid.Gid.GidBuilder;
 import com.npm.mmdb.mybatis.model.gid.GidFile;
 import com.npm.mmdb.mybatis.model.gid.GidFile.GidFileBuilder;
+import com.npm.mmdb.utility.BoolChecker;
 
 
 

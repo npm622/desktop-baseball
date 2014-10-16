@@ -1,4 +1,4 @@
-package com.npm.mmdb.utility;
+package com.npm.mmdb.utility.web;
 
 
 import java.io.IOException;
@@ -10,6 +10,8 @@ import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+
+import com.npm.mmdb.utility.MmdbPrinter;
 
 
 public class NetworkTools

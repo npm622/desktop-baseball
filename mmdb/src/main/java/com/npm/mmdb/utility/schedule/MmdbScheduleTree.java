@@ -2,15 +2,28 @@ package com.npm.mmdb.utility.schedule;
 
 
 import java.util.List;
+import java.util.Set;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import com.npm.mmdb.mybatis.model.gid.Gid;
 import com.npm.mmdb.mybatis.model.gid.GidFile;
+import com.npm.mmdb.utility.schedule.CustomDateRange.CustomDateRangeBuilder;
 
 
 public class MmdbScheduleTree
 {
+	public static void main(final String[ ] args)
+	{
+		MmdbScheduleTree tree = new MmdbScheduleTree(Source.WEB, Depth.MONTH, new CustomDateRangeBuilder(
+				CustomDateRange.Method.SEQUENTIAL).start(2011, 6, 2).end(2014, 6, 22).build( ));
+		tree.execute( );
+		for (CalendarNode year : tree.getMonthsForYear(Integer.valueOf(2011)))
+		{
+			System.out.println(year.getValue( ));
+		}
+	}
+
 	public static enum Source
 	{
 		WEB, DATABASE;
@@ -48,6 +61,12 @@ public class MmdbScheduleTree
 		{
 			return byLevel(getLevel( ) + 1);
 		}
+		
+		@Override
+		public String toString( )
+		{
+			return name( ).toString( );
+		}
 	}
 	
 	private final MmdbScheduleTree.Source	source;
@@ -71,11 +90,27 @@ public class MmdbScheduleTree
 		}
 		start = customDateRange.getStart( );
 		end = customDateRange.getEnd( );
+		values = new ScheduleToolsValues( );
 	}
 	
-	public final CalendarNode getRoot( )
+	public Set<CalendarNode> getYears( )
 	{
-		return root;
+		return root.getChildren( );
+	}
+	
+	public Set<CalendarNode> getMonthsForYear(final Integer year)
+	{
+		return root.getChild(year).getChildren( );
+	}
+	
+	public Set<CalendarNode> getDaysForYearMonth(final Integer year, final Integer month)
+	{
+		return root.getChild(year).getChild(month).getChildren( );
+	}
+	
+	public Set<GidNode> getGidsForYearMonthDay(final Integer year, final Integer month, final Integer day)
+	{
+		return root.getChild(year).getChild(month).getChild(day).getGids( );
 	}
 
 	public final void execute( )
@@ -138,7 +173,7 @@ public class MmdbScheduleTree
 				node.addGidNode(gidNode);
 			}
 		}
-		return build(level.getNextLevel( ), node);
+		return node;
 	}
 	
 	private class ScheduleToolsValues

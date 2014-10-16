@@ -22,22 +22,8 @@
 		</BoxPane>
 	</TablePane.Row>
 	<TablePane.Row height="750*">
-		<bxml:include bxml:id="gd2Downloader" src="gd2/gd2-downloader.bxml" inline="true"/>
-		<gd2:Gd2Reader bxml:id="gd2Reader" styles="{padding:5}">
-			<columns>
-				<TablePane.Column width="1*"/>
-			</columns>
-			<TablePane.Row height="750*">
-				<Label text="read"/>
-			</TablePane.Row>
-		</gd2:Gd2Reader>
-		<gd2:Gd2Uploader bxml:id="gd2Loader" styles="{padding:5}">
-			<columns>
-				<TablePane.Column width="1*"/>
-			</columns>
-			<TablePane.Row height="750*">
-				<Label text="upload"/>
-			</TablePane.Row>
-		</gd2:Gd2Uploader>
+		<bxml:include bxml:id="gd2Downloader" src="gd2/gd2-downloader.bxml"/>
+		<bxml:include bxml:id="gd2Reader" src="gd2/gd2-reader.bxml"/>
+		<bxml:include bxml:id="gd2Uploader" src="gd2/gd2-uploader.bxml"/>
 	</TablePane.Row>
 </gui:Gd2MlbScreen>

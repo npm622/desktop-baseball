@@ -1,4 +1,4 @@
-package com.npm.mmdb.utility;
+package com.npm.mmdb.utility.web;
 
 public enum Gd2MlbFile
 {

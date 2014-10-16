@@ -24,6 +24,7 @@ import org.apache.pivot.wtk.ButtonGroupListener;
 import org.apache.pivot.wtk.ButtonPressListener;
 import org.apache.pivot.wtk.Checkbox;
 import org.apache.pivot.wtk.Component;
+import org.apache.pivot.wtk.ComponentMouseButtonListener;
 import org.apache.pivot.wtk.ComponentMouseListener;
 import org.apache.pivot.wtk.Label;
 import org.apache.pivot.wtk.PushButton;
@@ -31,69 +32,107 @@ import org.apache.pivot.wtk.ScrollPane;
 import org.apache.pivot.wtk.TablePane;
 import org.apache.pivot.wtk.content.ButtonData;
 
-import com.npm.mmdb.gui.Mmdb;
+import com.npm.mmdb.controller.GidController;
 import com.npm.mmdb.gui.admin.InternalTask;
-import com.npm.mmdb.gui.home.listener.Gd2MlbScreenListener;
+import com.npm.mmdb.gui.core.Dashboard.DashboardListener;
 import com.npm.mmdb.mybatis.model.gid.Gid;
 import com.npm.mmdb.mybatis.model.gid.GidFile;
 import com.npm.mmdb.utility.DateTools;
-import com.npm.mmdb.utility.NetworkTools;
+import com.npm.mmdb.utility.schedule.CalendarNode;
 import com.npm.mmdb.utility.schedule.CustomDateRange;
 import com.npm.mmdb.utility.schedule.CustomDateRange.CustomDateRangeBuilder;
-import com.npm.mmdb.utility.schedule.DayTree;
-import com.npm.mmdb.utility.schedule.GidTree;
+import com.npm.mmdb.utility.schedule.GidNode;
 import com.npm.mmdb.utility.schedule.MmdbScheduleTree;
-import com.npm.mmdb.utility.schedule.MonthTree;
-import com.npm.mmdb.utility.schedule.ScheduleTree;
-import com.npm.mmdb.utility.schedule.YearTree;
+import com.npm.mmdb.utility.web.NetworkTools;
 
 
 public class Gd2Downloader extends TablePane implements Bindable
 {
+	/*
+	 * TODO - figure out a mechanism to know when all checkboxes are selected - select all checkbox doesn't unselect if
+	 * all checkboxes aren't selected - disable submit button if no checkboxes are selected - open dialog when fetch
+	 * button is clicked - send gids over to read panel
+	 */
+	public interface Gd2DownloaderListener extends DashboardListener
+	{
+		public void setActivePane( );
+	}
+
 	private enum DownloaderTreeTask
 	{
 		YEAR, MONTH, DAY, GID;
 	}
 	
-	private Mmdb					parent					= null;
-	private Gd2MlbScreenListener	listener				= null;
-	private List<Gd2GidTableRow>	gd2GidTableData			= null;
+	private Gd2DownloaderListener	listener			= null;
+	private List<Gd2GidTableRow>	gidTableData		= null;
 	
-	@BXML private Label				dbDateLabel				= null;
-	@BXML private Label				internetStatusLabel		= null;
-	@BXML private ButtonGroup		yearButtonGroup			= null;
-	@BXML private ButtonGroup		monthButtonGroup		= null;
-	@BXML private ButtonGroup		dayButtonGroup			= null;
-	@BXML private Accordion			gd2AccordionPane		= null;
-	@BXML private TablePane			gd2YearPane				= null;
-	@BXML private TablePane			gd2MonthPane			= null;
-	@BXML private TablePane			gd2DayPane				= null;
-	@BXML private ScrollPane		gd2GidTableScrollPane	= null;
-	@BXML private TablePane			gd2GidTable				= null;
-	@BXML private Checkbox			gd2GidTableSelectAll	= null;
-	@BXML private PushButton		submitToReadPaneButton	= null;
+	@BXML private PushButton		refreshButton		= null;
+	@BXML private Label				dbDate				= null;
+	@BXML private PushButton		fetchButton			= null;
+	@BXML private Label				internetStatus		= null;
+	@BXML private ButtonGroup		yearButtonGroup		= null;
+	@BXML private ButtonGroup		monthButtonGroup	= null;
+	@BXML private ButtonGroup		dayButtonGroup		= null;
+	@BXML private Accordion			accordionPane		= null;
+	@BXML private TablePane			yearPane			= null;
+	@BXML private TablePane			monthPane			= null;
+	@BXML private TablePane			dayPane				= null;
+	@BXML private ScrollPane		gidTablePane		= null;
+	@BXML private TablePane			gidTable			= null;
+	@BXML private Checkbox			gidSelectAll		= null;
+	@BXML private PushButton		submitButton		= null;
 	
 	@Override
 	public void initialize(final Map<String, Object> arg0, final URL arg1, final Resources arg2)
 	{
-		gd2GidTableData = new LinkedList<>( );
+		gidTableData = new LinkedList<>( );
 	}
 	
-	public final void startupGd2Downloader(final Mmdb iParent)
+	public final void startupGd2Downloader( )
 	{
-		parent = iParent;
-		if (NetworkTools.hasInternetConnection( ))
+		initRefresh( );
+		initDbDate( );
+		initFetch( );
+		initButtonGroups( );
+		initGidTable( );
+		setYearButtonData( );
+	}
+	
+	private final void initRefresh( )
+	{
+		refreshButton.getComponentMouseButtonListeners( ).add(new ComponentMouseButtonListener.Adapter( )
 		{
-			internetStatusLabel.setText("internet connected");
-			internetStatusLabel.getStyles( ).put("color", Integer.valueOf(17));
+			@Override
+			public boolean mouseClick(final Component component, final org.apache.pivot.wtk.Mouse.Button button,
+					final int x, final int y, final int count)
+			{
+				initFetch( );
+				setYearButtonData( );
+				initDbDate( );
+				return false;
+			}
+		});
+	}
+	
+	private final void initDbDate( )
+	{
+		dbDate.setText(new GidController( ).getDbDate( ).toString( ));
+	}
+
+	private final void initFetch( )
+	{
+		boolean hasInternet = NetworkTools.hasInternetConnection( );
+		if (hasInternet)
+		{
+			internetStatus.setText("internet connected");
+			internetStatus.getStyles( ).put("color", Integer.valueOf(17));
 		}
 		else
 		{
-			internetStatusLabel.setText("internet not connected");
-			internetStatusLabel.getStyles( ).put("color", Integer.valueOf(20));
+			internetStatus.setText("internet not connected");
+			internetStatus.getStyles( ).put("color", Integer.valueOf(20));
 		}
-		initButtonGroups( );
-		setYearButtonData( );
+		fetchButton.setEnabled(hasInternet);
 	}
 
 	private final void initButtonGroups( )
@@ -107,9 +146,9 @@ public class Gd2Downloader extends TablePane implements Bindable
 				{
 					monthButtonGroup.setSelection(null);
 				}
-				Accordion.setHeaderData(gd2YearPane, new ButtonData("year    :  " + yearButtonGroup.getSelection( )
+				Accordion.setHeaderData(yearPane, new ButtonData("year    :  " + yearButtonGroup.getSelection( )
 						.getButtonData( ).toString( )));
-				gd2AccordionPane.setSelectedIndex(1);
+				accordionPane.setSelectedIndex(1);
 				setMonthButtonData( );
 			}
 		});
@@ -125,13 +164,13 @@ public class Gd2Downloader extends TablePane implements Bindable
 				}
 				if (buttonGroup.getSelection( ) == null)
 				{
-					Accordion.setHeaderData(gd2MonthPane, new ButtonData("month :  --"));
+					Accordion.setHeaderData(monthPane, new ButtonData("month :  --"));
 				}
 				else
 				{
-					Accordion.setHeaderData(gd2MonthPane, new ButtonData(
+					Accordion.setHeaderData(monthPane, new ButtonData(
 							"month :  " + getMonthStringButtonData(monthButtonGroup.getSelection( ))));
-					gd2AccordionPane.setSelectedIndex(2);
+					accordionPane.setSelectedIndex(2);
 					setDayButtonData( );
 				}
 			}
@@ -144,30 +183,33 @@ public class Gd2Downloader extends TablePane implements Bindable
 			{
 				if (buttonGroup.getSelection( ) == null)
 				{
-					gd2GidTableScrollPane.setVisible(false);
-					submitToReadPaneButton.setVisible(false);
-					Accordion.setHeaderData(gd2DayPane, new ButtonData("day     :  --"));
+					gidTablePane.setVisible(false);
+					submitButton.setVisible(false);
+					Accordion.setHeaderData(dayPane, new ButtonData("day     :  --"));
 				}
 				else
 				{
-					Accordion.setHeaderData(gd2DayPane, new ButtonData("day     :  " + dayButtonGroup.getSelection( )
+					Accordion.setHeaderData(dayPane, new ButtonData("day     :  " + dayButtonGroup.getSelection( )
 							.getButtonData( ).toString( )));
 					repaint( );
 					setGidTableData( );
-					gd2GidTableScrollPane.setVisible(true);
-					submitToReadPaneButton.setVisible(true);
+					gidTablePane.setVisible(true);
+					submitButton.setVisible(true);
 				}
 			}
 		});
-		
-		gd2GidTable.getComponentMouseListeners( ).add(new ComponentMouseListener.Adapter( )
+	}
+	
+	private final void initGidTable( )
+	{
+		gidTable.getComponentMouseListeners( ).add(new ComponentMouseListener.Adapter( )
 		{
 			@Override
 			public boolean mouseMove(final Component component, final int x, final int y)
 			{
-				int rowNum = gd2GidTable.getRowAt(y);
+				int rowNum = gidTable.getRowAt(y);
 				int i = 0;
-				for (Row row : gd2GidTable.getRows( ))
+				for (Row row : gidTable.getRows( ))
 				{
 					if (rowNum == 0)
 					{
@@ -179,12 +221,12 @@ public class Gd2Downloader extends TablePane implements Bindable
 			}
 		});
 		
-		gd2GidTableSelectAll.getButtonPressListeners( ).add(new ButtonPressListener( )
+		gidSelectAll.getButtonPressListeners( ).add(new ButtonPressListener( )
 		{
 			@Override
 			public void buttonPressed(final Button button)
 			{
-				for (Gd2GidTableRow row : gd2GidTableData)
+				for (Gd2GidTableRow row : gidTableData)
 				{
 					row.checkbox.setSelected(button.isSelected( ));
 				}
@@ -228,25 +270,24 @@ public class Gd2Downloader extends TablePane implements Bindable
 		}
 	}
 	
-	private final void fillGd2YearPane(final ScheduleTree tree, final String message)
+	private final void fillGd2YearPane(final MmdbScheduleTree tree, final String message)
 	{
 		int rowCount = 0;
-		for (YearTree yearTree : tree.getYearTrees( ))
+		for (CalendarNode year : tree.getYears( ))
 		{
-			PushButton button = new PushButton(true, yearTree.getYear( ));
+			PushButton button = new PushButton(true, year.getValue( ));
 			button.setButtonGroup(yearButtonGroup);
-			gd2YearPane.getRows( ).get(rowCount++ % gd2YearPane.getRows( ).getLength( )).add(button);
+			yearPane.getRows( ).get(rowCount++ % yearPane.getRows( ).getLength( )).add(button);
 		}
 		taskCompleted(message);
 	}
 	
-	private final void fillGd2MonthPane(final ScheduleTree tree, final String message)
+	private final void fillGd2MonthPane(final MmdbScheduleTree tree, final String message)
 	{
-		YearTree year = tree.getYearTreeByVal(Integer.valueOf(getYearSelected( )));
 		Set<Integer> months = new HashSet<>( );
-		for (MonthTree monthTree : year.getMonthTrees( ))
+		for (CalendarNode month : tree.getMonthsForYear(Integer.valueOf(getYearSelected( ))))
 		{
-			months.add(monthTree.getMonth( ));
+			months.add(month.getValue( ));
 		}
 		for (Iterator<Button> iter = monthButtonGroup.iterator( ) ; iter.hasNext( ) ;)
 		{
@@ -257,22 +298,21 @@ public class Gd2Downloader extends TablePane implements Bindable
 		taskCompleted(message);
 	}
 	
-	private final void fillGd2DayPane(final ScheduleTree tree, final String message)
+	private final void fillGd2DayPane(final MmdbScheduleTree tree, final String message)
 	{
 		int rowNum = 0;
-		for (Row row : gd2DayPane.getRows( ))
+		for (Row row : dayPane.getRows( ))
 		{
 			if (rowNum++ != 0)
 			{
 				row.remove(0, row.getLength( ));
 			}
 		}
-		MonthTree month = tree.getYearTreeByVal(Integer.valueOf(getYearSelected( ))).getMonthTreeByVal(
-				Integer.valueOf(getMonthSelected( )));
 		Set<Integer> days = new HashSet<>( );
-		for (DayTree dayTree : month.getDayTrees( ))
+		for (CalendarNode day : tree.getDaysForYearMonth(Integer.valueOf(getYearSelected( )),
+				Integer.valueOf(getMonthSelected( ))))
 		{
-			days.add(dayTree.getDay( ));
+			days.add(day.getValue( ));
 		}
 		Calendar cal = Calendar.getInstance( );
 		cal.set(getYearSelected( ), getMonthSelected( ) - 1, 1);
@@ -280,7 +320,7 @@ public class Gd2Downloader extends TablePane implements Bindable
 		int totalIters = startOffset + cal.getActualMaximum(Calendar.DATE);
 		for (int i = 0 ; i < totalIters ; i++)
 		{
-			Row row = gd2DayPane.getRows( ).get(Double.valueOf(Math.floor(i / 7) + 1).intValue( ));
+			Row row = dayPane.getRows( ).get(Double.valueOf(Math.floor(i / 7) + 1).intValue( ));
 			if (i < startOffset)
 			{
 				row.add(new TablePane.Filler( ));
@@ -296,18 +336,16 @@ public class Gd2Downloader extends TablePane implements Bindable
 		taskCompleted(message);
 	}
 	
-	private final void fillGd2GidPane(final ScheduleTree tree, final String message)
+	private final void fillGd2GidPane(final MmdbScheduleTree tree, final String message)
 	{
-		DayTree day = tree.getYearTreeByVal(Integer.valueOf(getYearSelected( )))
-				.getMonthTreeByVal(Integer.valueOf(getMonthSelected( )))
-				.getDayTreeByVal(Integer.valueOf(getDaySelected( )));
-		gd2GidTable.getRows( ).remove(1, gd2GidTable.getRows( ).getLength( ) - 1);
-		gd2GidTableData.clear( );
-		for (GidTree gidTree : day.getGidTrees( ))
+		gidTableData.clear( );
+		gidTable.getRows( ).remove(1, gidTable.getRows( ).getLength( ) - 1);
+		for (GidNode gidNode : tree.getGidsForYearMonthDay(Integer.valueOf(getYearSelected( )),
+				Integer.valueOf(getMonthSelected( )), Integer.valueOf(getDaySelected( ))))
 		{
-			Gd2GidTableRow row = new Gd2GidTableRow(gidTree.getGid( ), gidTree.getGidFiles( ));
-			gd2GidTable.getRows( ).add(row);
-			gd2GidTableData.add(row);
+			Gd2GidTableRow row = new Gd2GidTableRow(gidNode.getGid( ), gidNode.getGidFiles( ));
+			gidTable.getRows( ).add(row);
+			gidTableData.add(row);
 		}
 		taskCompleted(message);
 	}
@@ -345,7 +383,7 @@ public class Gd2Downloader extends TablePane implements Bindable
 		}
 	}
 	
-	public final void setGd2MlbScreenListener(final Gd2MlbScreenListener listener)
+	public final void setListener(final Gd2DownloaderListener listener)
 	{
 		this.listener = listener;
 	}
@@ -358,7 +396,7 @@ public class Gd2Downloader extends TablePane implements Bindable
 	private class Gd2GidTableRow extends TablePane.Row
 	{
 		private final Gid			gid;
-		private final List<GidFile>	gidFiles;
+		private final Set<GidFile>	gidFiles;
 		private Checkbox			checkbox		= null;
 		private PushButton			pushButton		= null;
 		private Label				awayAbbrev		= null;
@@ -368,7 +406,7 @@ public class Gd2Downloader extends TablePane implements Bindable
 		private Label				gameNumber		= null;
 		private Label				note			= null;
 		
-		Gd2GidTableRow(final Gid gid, final List<GidFile> gidFiles)
+		private Gd2GidTableRow(final Gid gid, final Set<GidFile> gidFiles)
 		{
 			this.gid = gid;
 			this.gidFiles = gidFiles;
@@ -401,7 +439,7 @@ public class Gd2Downloader extends TablePane implements Bindable
 			BoxPane buttonPane = new BoxPane( );
 			buttonPane.getStyles( ).put("horizontalAlignment", "center");
 			buttonPane.getStyles( ).put("verticalAlignment", "center");
-			buttonPane.getStyles( ).put("padding", 2);
+			buttonPane.getStyles( ).put("padding", Integer.valueOf(2));
 			buttonPane.add(pushButton);
 			pushButton.setPreferredSize(16, 16);
 			setHeight(-1);
@@ -427,7 +465,7 @@ public class Gd2Downloader extends TablePane implements Bindable
 		}
 	}
 
-	private class AccordionPaneTask implements InternalTask<ScheduleTree>
+	private class AccordionPaneTask implements InternalTask<MmdbScheduleTree>
 	{
 		private final DownloaderTreeTask	pane;
 		
@@ -436,27 +474,27 @@ public class Gd2Downloader extends TablePane implements Bindable
 			this.pane = pane;
 		}
 		
-		private ScheduleTree getTree( )
+		private MmdbScheduleTree getTree( )
 		{
 			switch (pane)
 			{
 				case YEAR:
-					return new ScheduleTree(MmdbScheduleTree.Source.DATABASE, MmdbScheduleTree.Depth.YEAR,
+					return new MmdbScheduleTree(MmdbScheduleTree.Source.DATABASE, MmdbScheduleTree.Depth.YEAR,
 							new CustomDateRangeBuilder(CustomDateRange.Method.RECURSIVE).build( ));
 				case MONTH:
-					return new ScheduleTree(MmdbScheduleTree.Source.DATABASE, MmdbScheduleTree.Depth.MONTH,
+					return new MmdbScheduleTree(MmdbScheduleTree.Source.DATABASE, MmdbScheduleTree.Depth.MONTH,
 							new CustomDateRangeBuilder(CustomDateRange.Method.RECURSIVE).start(getYearSelected( ))
 									.build( ));
 				case DAY:
-					return new ScheduleTree(MmdbScheduleTree.Source.DATABASE, MmdbScheduleTree.Depth.DAY,
+					return new MmdbScheduleTree(MmdbScheduleTree.Source.DATABASE, MmdbScheduleTree.Depth.DAY,
 							new CustomDateRangeBuilder(CustomDateRange.Method.RECURSIVE).start(getYearSelected( ),
 									getMonthSelected( )).build( ));
 				case GID:
-					return new ScheduleTree(MmdbScheduleTree.Source.DATABASE, MmdbScheduleTree.Depth.GID_FILE,
+					return new MmdbScheduleTree(MmdbScheduleTree.Source.DATABASE, MmdbScheduleTree.Depth.GID_FILE,
 							new CustomDateRangeBuilder(CustomDateRange.Method.RECURSIVE).start(getYearSelected( ),
 									getMonthSelected( ), getDaySelected( )).build( ));
 				default:
-					return new ScheduleTree(MmdbScheduleTree.Source.DATABASE, MmdbScheduleTree.Depth.YEAR,
+					return new MmdbScheduleTree(MmdbScheduleTree.Source.DATABASE, MmdbScheduleTree.Depth.YEAR,
 							new CustomDateRangeBuilder(CustomDateRange.Method.RECURSIVE).build( ));
 			}
 		}
@@ -489,14 +527,14 @@ public class Gd2Downloader extends TablePane implements Bindable
 		}
 		
 		@Override
-		public Task<ScheduleTree> getTask( )
+		public Task<MmdbScheduleTree> getTask( )
 		{
-			return new Task<ScheduleTree>( )
+			return new Task<MmdbScheduleTree>( )
 			{
 				@Override
-				public ScheduleTree execute( ) throws TaskExecutionException
+				public MmdbScheduleTree execute( ) throws TaskExecutionException
 				{
-					ScheduleTree tree = getTree( );
+					MmdbScheduleTree tree = getTree( );
 					tree.execute( );
 					return tree;
 				}
@@ -504,18 +542,18 @@ public class Gd2Downloader extends TablePane implements Bindable
 		}
 		
 		@Override
-		public TaskListener<ScheduleTree> getTaskListener( )
+		public TaskListener<MmdbScheduleTree> getTaskListener( )
 		{
-			return new TaskListener<ScheduleTree>( )
+			return new TaskListener<MmdbScheduleTree>( )
 			{
 				@Override
-				public void executeFailed(final Task<ScheduleTree> task)
+				public void executeFailed(final Task<MmdbScheduleTree> task)
 				{
 					taskFailed(getFailMessage( ) + "  |  " + task.getFault( ).getLocalizedMessage( ));
 				}
 				
 				@Override
-				public void taskExecuted(final Task<ScheduleTree> task)
+				public void taskExecuted(final Task<MmdbScheduleTree> task)
 				{
 					switch (pane)
 					{

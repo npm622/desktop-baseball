@@ -13,9 +13,9 @@ import java.util.Set;
 public class CalendarNode
 {
 	private final MmdbScheduleTree.Depth	depth;
-	private final Integer				value;
-	private Map<Integer, CalendarNode>	children;
-	private List<GidNode>				gids;
+	private final Integer					value;
+	private Map<Integer, CalendarNode>		children;
+	private List<GidNode>					gids;
 	
 	public CalendarNode(final MmdbScheduleTree.Depth depth, final Integer value)
 	{
@@ -37,14 +37,6 @@ public class CalendarNode
 	
 	public final void addChild(final CalendarNode child)
 	{
-		switch (depth)
-		{
-			case DAY:
-			case GID:
-			case GID_FILE:
-				return;
-			default:
-		}
 		children.put(child.getValue( ), child);
 	}
 	
@@ -60,26 +52,11 @@ public class CalendarNode
 	
 	public Set<CalendarNode> getChildren( )
 	{
-		switch (depth)
-		{
-			case DAY:
-			case GID:
-			case GID_FILE:
-				return new LinkedHashSet<>( );
-			default:
-		}
 		return Collections.unmodifiableSet(new LinkedHashSet<>(children.values( )));
 	}
-
+	
 	public final void addGidNode(final GidNode gidNode)
 	{
-		switch (depth)
-		{
-			case YEAR:
-			case MONTH:
-				return;
-			default:
-		}
 		gids.add(gidNode);
 	}
 	
@@ -95,13 +72,21 @@ public class CalendarNode
 	
 	public final Set<GidNode> getGids( )
 	{
-		switch (depth)
-		{
-			case YEAR:
-			case MONTH:
-				return new LinkedHashSet<>( );
-			default:
-		}
 		return Collections.unmodifiableSet(new LinkedHashSet<>(gids));
+	}
+
+	@Override
+	public String toString( )
+	{
+		StringBuilder sb = new StringBuilder(depth + "\t" + value);
+		for (CalendarNode child : getChildren( ))
+		{
+			sb.append("\n").append(child.toString( ));
+			for (GidNode gidNode : child.getGids( ))
+			{
+				sb.append("\n").append(gidNode);
+			}
+		}
+		return sb.toString( );
 	}
 }

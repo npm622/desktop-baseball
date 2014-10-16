@@ -13,13 +13,10 @@ import org.apache.pivot.util.concurrent.TaskListener;
 import org.apache.pivot.wtk.CardPane;
 import org.apache.pivot.wtk.Component;
 
-import com.npm.mmdb.gui.Mmdb;
 import com.npm.mmdb.gui.admin.DashboardScreen;
-import com.npm.mmdb.gui.core.listener.DashboardListener;
 import com.npm.mmdb.gui.home.Db2Screen;
 import com.npm.mmdb.gui.home.Gd2MlbScreen;
 import com.npm.mmdb.gui.home.MmdbHomeScreen;
-import com.npm.mmdb.gui.home.listener.Gd2MlbScreenListener;
 import com.npm.mmdb.gui.performance.FantasyScreen;
 import com.npm.mmdb.gui.performance.GameLogScreen;
 import com.npm.mmdb.gui.performance.PerformanceScreen;
@@ -32,7 +29,12 @@ import com.npm.mmdb.gui.standings.TeamViewerScreen;
 
 public class Dashboard extends CardPane implements Bindable
 {
-	private Mmdb					parent				= null;
+	public interface DashboardListener
+	{
+		public <T> void backgroundTaskRequested(Task<T> task, TaskListener<T> taskListener);
+		public void sendToBottomline(String message);
+	}
+
 	private DashboardListener		listener			= null;
 
 	@BXML private MmdbHomeScreen	mmdbHomeScreen		= null;
@@ -56,16 +58,15 @@ public class Dashboard extends CardPane implements Bindable
 		
 	}
 	
-	public final void startupDashboard(final Mmdb parent)
+	public final void startupDashboard( )
 	{
-		this.parent = parent;
 		initListeners( );
-		gd2MlbScreen.startupGd2MlbScreen(parent);
+		gd2MlbScreen.startupGd2MlbScreen( );
 	}
 	
 	private final void initListeners( )
 	{
-		gd2MlbScreen.setGd2MlbScreenListener(new Gd2MlbScreenListener( )
+		gd2MlbScreen.setListener(new Gd2MlbScreen.Gd2MlbScreenListener( )
 		{
 			@Override
 			public <T> void backgroundTaskRequested(final Task<T> task, final TaskListener<T> taskListener)

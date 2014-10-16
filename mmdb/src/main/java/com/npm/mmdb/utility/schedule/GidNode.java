@@ -45,4 +45,15 @@ public class GidNode
 	{
 		return Collections.unmodifiableSet(new LinkedHashSet<>(gidFiles));
 	}
+	
+	@Override
+	public String toString( )
+	{
+		StringBuilder sb = new StringBuilder(gid.toString( ));
+		for (GidFile gidFile : getGidFiles( ))
+		{
+			sb.append("\n").append(gidFile);
+		}
+		return sb.toString( );
+	}
 }

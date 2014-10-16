@@ -10,19 +10,19 @@
 			</columns>
 			<TablePane.Row height="-1">
 				<BoxPane styles="{horizontalAlignment:'left'}">
-					<PushButton buttonData="refresh years"/>
+					<PushButton bxml:id="refreshButton" buttonData="refresh calendar"/>
 				</BoxPane>
 				<BoxPane styles="{horizontalAlignment:'right'}">
-					<PushButton buttonData="fetch..."/>
+					<PushButton bxml:id="fetchButton" buttonData="fetch..."/>
 				</BoxPane>
 			</TablePane.Row>
 			<TablePane.Row height="-1">
 				<BoxPane>
 					<Label text="db as of:"/>
-					<Label bxml:id="dbDateLabel" text="dbDateLabel"/>
+					<Label bxml:id="dbDate" text="dbDateLabel"/>
 				</BoxPane>
 				<BoxPane>
-					<Label bxml:id="internetStatusLabel" text="interentStatusLabel"/>
+					<Label bxml:id="internetStatus" text="interentStatusLabel"/>
 				</BoxPane>
 			</TablePane.Row>
 		</TablePane>
@@ -33,8 +33,8 @@
 			<ButtonGroup bxml:id="monthButtonGroup"/>
 			<ButtonGroup bxml:id="dayButtonGroup"/>
 		</bxml:define>
-		<Accordion bxml:id="gd2AccordionPane">
-			<TablePane bxml:id="gd2YearPane" Accordion.headerData="year :     --" styles="{horizontalSpacing:5, verticalSpacing:5}">
+		<Accordion bxml:id="accordionPane">
+			<TablePane bxml:id="yearPane" Accordion.headerData="year :     --" styles="{horizontalSpacing:5, verticalSpacing:5}">
 				<columns>
 					<TablePane.Column width="1*"/>
 					<TablePane.Column width="1*"/>
@@ -56,7 +56,7 @@
 				<TablePane.Row height="1*"/>
 				<TablePane.Row height="1*"/>
 			</TablePane>
-			<TablePane bxml:id="gd2MonthPane" Accordion.headerData="month :  --" styles="{horizontalSpacing:5, verticalSpacing:5}">
+			<TablePane bxml:id="monthPane" Accordion.headerData="month :  --" styles="{horizontalSpacing:5, verticalSpacing:5}">
 				<columns>
 					<TablePane.Column width="1*"/>
 					<TablePane.Column width="1*"/>
@@ -82,7 +82,7 @@
 					<PushButton bxml:id="decemberButton" buttonData="december" toggleButton="true" buttonGroup="$monthButtonGroup"/>
 				</TablePane.Row>
 			</TablePane>
-			<TablePane bxml:id="gd2DayPane" Accordion.headerData="day :      --" styles="{horizontalSpacing:5, verticalSpacing:5}">
+			<TablePane bxml:id="dayPane" Accordion.headerData="day :      --" styles="{horizontalSpacing:5, verticalSpacing:5}">
 				<columns>
 					<TablePane.Column width="1*"/>
 					<TablePane.Column width="1*"/>
@@ -112,8 +112,8 @@
 	</TablePane.Row>
 	<TablePane.Row height="4*">
 		<FillPane>
-			<ScrollPane bxml:id="gd2GidTableScrollPane" horizontalScrollBarPolicy="fill_to_capacity" styles="{backgroundColor:4}" visible="false">
-				<TablePane bxml:id="gd2GidTable" styles="{padding:5, verticalSpacing:2, horizontalSpacing:8, showHorizontalGridLines:'true', horizontalGridColor:17}">
+			<ScrollPane bxml:id="gidTablePane" horizontalScrollBarPolicy="fill_to_capacity" styles="{backgroundColor:4}" visible="false">
+				<TablePane bxml:id="gidTable" styles="{padding:5, verticalSpacing:2, horizontalSpacing:8, showHorizontalGridLines:'true', horizontalGridColor:17}">
 					<columns>
 						<TablePane.Column width="1*"/>
 						<TablePane.Column width="1*"/>
@@ -127,7 +127,7 @@
 					<TablePane.Row height="1*">
 						<TablePane.Filler/>
 						<BoxPane styles="{horizontalAlignment:'center'}">
-							<Checkbox bxml:id="gd2GidTableSelectAll"/>
+							<Checkbox bxml:id="gidSelectAll"/>
 						</BoxPane>
 						<Label text="away team" styles="{horizontalAlignment:'center', color:17}"/>
 						<Label text="(sport code)" styles="{horizontalAlignment:'center', color:17}"/>
@@ -142,7 +142,7 @@
 	</TablePane.Row>
 	<TablePane.Row height="-1">
 		<BoxPane styles="{padding:5, verticalAlignment:'center', horizontalAlignment:'right'}">
-			<PushButton bxml:id="submitToReadPaneButton" buttonData="read games -->"/>
+			<PushButton bxml:id="submitButton" buttonData="read games -->"/>
 		</BoxPane>
 	</TablePane.Row>
 </gui:Gd2Downloader>

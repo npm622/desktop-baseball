@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.xml.datatype.XMLGregorianCalendar;
+
 import com.npm.mmdb.mybatis.dao.DbQuery;
 import com.npm.mmdb.mybatis.dao.gid.GidFileMapper;
 import com.npm.mmdb.mybatis.dao.gid.GidMapper;
@@ -14,6 +16,7 @@ import com.npm.mmdb.mybatis.model.gid.Gid;
 import com.npm.mmdb.mybatis.model.gid.GidExample;
 import com.npm.mmdb.mybatis.model.gid.GidFile;
 import com.npm.mmdb.mybatis.model.gid.GidFileExample;
+import com.npm.mmdb.utility.DateTools;
 
 public class GidController
 {
@@ -94,5 +97,13 @@ public class GidController
 		gidFileExample.or( ).andIdGidEqualTo(gid.getId( ));
 		gidFiles = gidFileDbQuery.selectByExample(gidFileExample);
 		return gidFiles;
+	}
+	
+	public final XMLGregorianCalendar getDbDate( )
+	{
+		Integer year = Collections.max(getGidDbYears( ));
+		Integer month = Collections.max(getGidDbMonths(year));
+		Integer day = Collections.max(getGidDbDays(year, month));
+		return DateTools.createXmlCalendar(year.intValue( ), month.intValue( ), day.intValue( ));
 	}
 }
