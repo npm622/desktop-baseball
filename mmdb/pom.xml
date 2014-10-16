@@ -49,6 +49,11 @@
 			<version>1.3.2</version>
 		</dependency>
 		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.7.2</version>
+		</dependency>
+		<dependency>
 			<groupId>mmdb-xsd</groupId>
 			<artifactId>mmdb-xsd</artifactId>
 			<version>0.0.1-SNAPSHOT</version>

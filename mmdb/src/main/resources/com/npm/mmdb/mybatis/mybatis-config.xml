@@ -24,7 +24,7 @@
 		</environment>
 	</environments>
 	<mappers>
-		<mapper resource="com/npm/mmdb/mybatis/map/GidMapper.xml"/>
-		<mapper resource="com/npm/mmdb/mybatis/map/GidFileMapper.xml"/>
+		<mapper resource="com/npm/mmdb/mybatis/map/gid/GidMapper.xml"/>
+		<mapper resource="com/npm/mmdb/mybatis/map/gid/GidFileMapper.xml"/>
 	</mappers>
 </configuration>

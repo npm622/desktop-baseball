@@ -8,13 +8,18 @@ import org.apache.pivot.beans.BXML;
 import org.apache.pivot.beans.Bindable;
 import org.apache.pivot.collections.Map;
 import org.apache.pivot.util.Resources;
+import org.apache.pivot.util.concurrent.Task;
+import org.apache.pivot.util.concurrent.TaskListener;
 import org.apache.pivot.wtk.CardPane;
 import org.apache.pivot.wtk.Component;
 
+import com.npm.mmdb.gui.Mmdb;
 import com.npm.mmdb.gui.admin.DashboardScreen;
+import com.npm.mmdb.gui.core.listener.DashboardListener;
 import com.npm.mmdb.gui.home.Db2Screen;
 import com.npm.mmdb.gui.home.Gd2MlbScreen;
 import com.npm.mmdb.gui.home.MmdbHomeScreen;
+import com.npm.mmdb.gui.home.listener.Gd2MlbScreenListener;
 import com.npm.mmdb.gui.performance.FantasyScreen;
 import com.npm.mmdb.gui.performance.GameLogScreen;
 import com.npm.mmdb.gui.performance.PerformanceScreen;
@@ -27,6 +32,9 @@ import com.npm.mmdb.gui.standings.TeamViewerScreen;
 
 public class Dashboard extends CardPane implements Bindable
 {
+	private Mmdb					parent				= null;
+	private DashboardListener		listener			= null;
+
 	@BXML private MmdbHomeScreen	mmdbHomeScreen		= null;
 	@BXML private Gd2MlbScreen		gd2MlbScreen		= null;
 	@BXML private Db2Screen			db2Screen			= null;
@@ -48,9 +56,35 @@ public class Dashboard extends CardPane implements Bindable
 		
 	}
 	
-	public final void startupDashboard( )
+	public final void startupDashboard(final Mmdb parent)
 	{
-		gd2MlbScreen.startupGd2MlbScreen( );
+		this.parent = parent;
+		initListeners( );
+		gd2MlbScreen.startupGd2MlbScreen(parent);
+	}
+	
+	private final void initListeners( )
+	{
+		gd2MlbScreen.setGd2MlbScreenListener(new Gd2MlbScreenListener( )
+		{
+			@Override
+			public <T> void backgroundTaskRequested(final Task<T> task, final TaskListener<T> taskListener)
+			{
+				if (listener != null)
+				{
+					listener.backgroundTaskRequested(task, taskListener);
+				}
+			}
+			
+			@Override
+			public void sendToBottomline(final String message)
+			{
+				if (listener != null)
+				{
+					listener.sendToBottomline(message);
+				}
+			}
+		});
 	}
 
 	public final void updateScreen(final DashboardScreen newScreen)
@@ -66,4 +100,8 @@ public class Dashboard extends CardPane implements Bindable
 		}
 	}
 	
+	public final void setDashboardListener(final DashboardListener listener)
+	{
+		this.listener = listener;
+	}
 }

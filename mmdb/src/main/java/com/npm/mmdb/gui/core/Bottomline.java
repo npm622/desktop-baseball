@@ -9,8 +9,8 @@ import org.apache.pivot.collections.Map;
 import org.apache.pivot.util.Resources;
 import org.apache.pivot.wtk.Action;
 import org.apache.pivot.wtk.ActivityIndicator;
+import org.apache.pivot.wtk.BoxPane;
 import org.apache.pivot.wtk.Component;
-import org.apache.pivot.wtk.FlowPane;
 import org.apache.pivot.wtk.Label;
 import org.apache.pivot.wtk.Menu;
 import org.apache.pivot.wtk.MenuHandler;
@@ -18,9 +18,10 @@ import org.apache.pivot.wtk.Prompt;
 
 import com.npm.mmdb.gui.Mmdb;
 import com.npm.mmdb.gui.admin.DashboardScreen;
+import com.npm.mmdb.utility.MmdbPrinter;
 
 
-public class Bottomline extends FlowPane implements Bindable
+public class Bottomline extends BoxPane implements Bindable
 {
 	private Mmdb					parent						= null;
 
@@ -65,5 +66,20 @@ public class Bottomline extends FlowPane implements Bindable
 	public final void updateScreen(final DashboardScreen newScreen)
 	{
 		bottomlineLabel.setText("viewing " + newScreen.toString( ) + " screen");
+	}
+	
+	public final void displayMessage(final String message)
+	{
+		bottomlineLabel.setText(MmdbPrinter.format(message));
+	}
+
+	public final void turnOnActivity( )
+	{
+		bottomlineActivityIndicator.setActive(true);
+	}
+	
+	public final void turnOffActivity( )
+	{
+		bottomlineActivityIndicator.setActive(false);
 	}
 }

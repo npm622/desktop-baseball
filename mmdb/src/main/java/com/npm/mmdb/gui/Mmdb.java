@@ -7,14 +7,18 @@ import org.apache.pivot.beans.BXML;
 import org.apache.pivot.beans.Bindable;
 import org.apache.pivot.collections.Map;
 import org.apache.pivot.util.Resources;
+import org.apache.pivot.util.concurrent.Task;
+import org.apache.pivot.util.concurrent.TaskListener;
 import org.apache.pivot.wtk.Action;
 import org.apache.pivot.wtk.Component;
+import org.apache.pivot.wtk.TaskAdapter;
 import org.apache.pivot.wtk.Window;
 
 import com.npm.mmdb.gui.admin.DashboardScreen;
 import com.npm.mmdb.gui.core.Bottomline;
 import com.npm.mmdb.gui.core.Dashboard;
 import com.npm.mmdb.gui.core.Toolbar;
+import com.npm.mmdb.gui.core.listener.DashboardListener;
 
 
 public class Mmdb extends Window implements Bindable
@@ -31,6 +35,7 @@ public class Mmdb extends Window implements Bindable
 	
 	public final void startupMmdb( )
 	{
+		initListeners( );
 		for (DashboardScreen screen : DashboardScreen.values( ))
 		{
 			screen.setBreadcrumb( );
@@ -39,9 +44,29 @@ public class Mmdb extends Window implements Bindable
 			Action.getNamedActions( ).put(screen.toString( ), screen.getLoadAction( ));
 		}
 		toolbar.startupToolbar(this);
-		dashboard.startupDashboard( );
+		dashboard.startupDashboard(this);
 		bottomline.startupBottomline(this);
 		Action.getNamedActions( ).get(DashboardScreen.MMDB_HOME.toString( )).perform(this);
+	}
+	
+	private final void initListeners( )
+	{
+		dashboard.setDashboardListener(new DashboardListener( )
+		{
+			@Override
+			public <T> void backgroundTaskRequested(final Task<T> task, final TaskListener<T> taskListener)
+			{
+				bottomline.turnOnActivity( );
+				task.execute(new TaskAdapter<>(taskListener));
+			}
+			
+			@Override
+			public void sendToBottomline(final String message)
+			{
+				bottomline.turnOffActivity( );
+				bottomline.displayMessage(message);
+			}
+		});
 	}
 
 	private final Action createScreenUpdateAction(final DashboardScreen newScreen)

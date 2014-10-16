@@ -1,4 +1,4 @@
-<gui:Gd2MlbScreen xmlns="org.apache.pivot.wtk" xmlns:bxml="http://pivot.apache.org/bxml" xmlns:gui="com.npm.mmdb.gui.home" xmlns:content="org.apache.pivot.wtk.content">
+<gui:Gd2MlbScreen xmlns="org.apache.pivot.wtk" xmlns:bxml="http://pivot.apache.org/bxml" xmlns:gui="com.npm.mmdb.gui.home" xmlns:gd2="com.npm.mmdb.gui.home.gd2">
 	<columns>
 		<TablePane.Column width="1*"/>
 		<TablePane.Column width="1*"/>
@@ -20,144 +20,24 @@
 				styles="{horizontalAlignment:'center', verticalAlignment:'center'}"/>
 			<ImageView bxml:id="gd2UploadInactive" image="/com/npm/mmdb/images/gd2-mlb-upload-inactive-v0.1.png" styles="{horizontalAlignment:'center', verticalAlignment:'center'}"/>
 		</BoxPane>
-		<Label text="read"/>
-		<Label text="upload"/>
 	</TablePane.Row>
 	<TablePane.Row height="750*">
-		<TablePane styles="{padding:5}">
+		<bxml:include bxml:id="gd2Downloader" src="gd2/gd2-downloader.bxml" inline="true"/>
+		<gd2:Gd2Reader bxml:id="gd2Reader" styles="{padding:5}">
 			<columns>
 				<TablePane.Column width="1*"/>
 			</columns>
-			<TablePane.Row height="-1">
-				<TablePane styles="{verticalSpacing:5}">
-					<columns>
-						<TablePane.Column width="1*"/>
-						<TablePane.Column width="-1"/>
-					</columns>
-					<TablePane.Row height="-1">
-						<BoxPane styles="{horizontalAlignment:'left'}">
-							<PushButton buttonData="refresh years"/>
-						</BoxPane>
-						<BoxPane styles="{horizontalAlignment:'right'}">
-							<PushButton buttonData="fetch..."/>
-						</BoxPane>
-					</TablePane.Row>
-					<TablePane.Row height="-1">
-						<BoxPane>
-							<Label text="db as of:"/>
-							<Label bxml:id="dbDateLabel" text="dbDateLabel"/>
-						</BoxPane>
-						<BoxPane>
-							<Label bxml:id="internetStatusLabel" text="interentStatusLabel"/>
-						</BoxPane>
-					</TablePane.Row>
-				</TablePane>
+			<TablePane.Row height="750*">
+				<Label text="read"/>
 			</TablePane.Row>
-			<TablePane.Row height="16*">
-				<bxml:define>
-					<ButtonGroup bxml:id="yearButtonGroup"/>
-					<ButtonGroup bxml:id="monthButtonGroup"/>
-					<ButtonGroup bxml:id="dayButtonGroup"/>
-				</bxml:define>
-				<Accordion>
-					<TablePane bxml:id="gd2YearPane" Accordion.headerData="year" styles="{horizontalSpacing:5, verticalSpacing:5}">
-						<columns>
-							<TablePane.Column width="1*"/>
-							<TablePane.Column width="1*"/>
-							<TablePane.Column width="1*"/>
-							<TablePane.Column width="1*"/>
-							<TablePane.Column width="1*"/>
-							<TablePane.Column width="1*"/>
-							<TablePane.Column width="1*"/>
-							<TablePane.Column width="1*"/>
-							<TablePane.Column width="1*"/>
-							<TablePane.Column width="1*"/>
-						</columns>
-						<TablePane.Row height="1*"/>
-						<TablePane.Row height="1*"/>
-						<TablePane.Row height="1*"/>
-						<TablePane.Row height="1*"/>
-						<TablePane.Row height="1*"/>
-						<TablePane.Row height="1*"/>
-						<TablePane.Row height="1*"/>
-						<TablePane.Row height="1*"/>
-						<TablePane.Row height="1*"/>
-						<TablePane.Row height="1*"/>
-					</TablePane>
-					<TablePane bxml:id="gd2MonthPane" Accordion.headerData="month" styles="{horizontalSpacing:5, verticalSpacing:5}">
-						<columns>
-							<TablePane.Column width="1*"/>
-							<TablePane.Column width="1*"/>
-							<TablePane.Column width="1*"/>
-							<TablePane.Column width="1*"/>
-						</columns>
-						<TablePane.Row height="1*">
-							<PushButton bxml:id="januaryButton" buttonData="january" toggleButton="true" buttonGroup="$monthButtonGroup"/>
-							<PushButton bxml:id="februaryButton" buttonData="february" toggleButton="true" buttonGroup="$monthButtonGroup"/>
-							<PushButton bxml:id="marchButton" buttonData="march" toggleButton="true" buttonGroup="$monthButtonGroup"/>
-							<PushButton bxml:id="aprilButton" buttonData="april" toggleButton="true" buttonGroup="$monthButtonGroup"/>
-						</TablePane.Row>
-						<TablePane.Row height="1*">
-							<PushButton bxml:id="mayButton" buttonData="may" toggleButton="true" buttonGroup="$monthButtonGroup"/>
-							<PushButton bxml:id="juneButton" buttonData="june" toggleButton="true" buttonGroup="$monthButtonGroup"/>
-							<PushButton bxml:id="julyButton" buttonData="july" toggleButton="true" buttonGroup="$monthButtonGroup"/>
-							<PushButton bxml:id="augustButton" buttonData="august" toggleButton="true" buttonGroup="$monthButtonGroup"/>
-						</TablePane.Row>
-						<TablePane.Row height="1*">
-							<PushButton bxml:id="septemberButton" buttonData="september" toggleButton="true" buttonGroup="$monthButtonGroup"/>
-							<PushButton bxml:id="octoberButton" buttonData="october" toggleButton="true" buttonGroup="$monthButtonGroup"/>
-							<PushButton bxml:id="novemberButton" buttonData="november" toggleButton="true" buttonGroup="$monthButtonGroup"/>
-							<PushButton bxml:id="decemberButton" buttonData="december" toggleButton="true" buttonGroup="$monthButtonGroup"/>
-						</TablePane.Row>
-					</TablePane>
-					<TablePane bxml:id="gd2DayPane" Accordion.headerData="day" styles="{horizontalSpacing:5, verticalSpacing:5}">
-						<columns>
-							<TablePane.Column width="1*"/>
-							<TablePane.Column width="1*"/>
-							<TablePane.Column width="1*"/>
-							<TablePane.Column width="1*"/>
-							<TablePane.Column width="1*"/>
-							<TablePane.Column width="1*"/>
-							<TablePane.Column width="1*"/>
-						</columns>
-						<TablePane.Row height="-1">
-							<Label text="s" styles="{horizontalAlignment:'center'}"/>
-							<Label text="m" styles="{horizontalAlignment:'center'}"/>
-							<Label text="t" styles="{horizontalAlignment:'center'}"/>
-							<Label text="w" styles="{horizontalAlignment:'center'}"/>
-							<Label text="r" styles="{horizontalAlignment:'center'}"/>
-							<Label text="f" styles="{horizontalAlignment:'center'}"/>
-							<Label text="s" styles="{horizontalAlignment:'center'}"/>
-						</TablePane.Row>
-					</TablePane>
-				</Accordion>
+		</gd2:Gd2Reader>
+		<gd2:Gd2Uploader bxml:id="gd2Loader" styles="{padding:5}">
+			<columns>
+				<TablePane.Column width="1*"/>
+			</columns>
+			<TablePane.Row height="750*">
+				<Label text="upload"/>
 			</TablePane.Row>
-			<TablePane.Row height="16*">
-				<ScrollPane horizontalScrollBarPolicy="fill_to_capacity" styles="{backgroundColor:4}">
-					<TablePane bxml:id="gd2GidTable" styles="{verticalSpacing:5}">
-						<columns>
-							<TablePane.Column width="1*"/>
-							<TablePane.Column width="1*"/>
-							<TablePane.Column width="3*"/>
-							<TablePane.Column width="3*"/>
-							<TablePane.Column width="3*"/>
-							<TablePane.Column width="3*"/>
-							<TablePane.Column width="1*"/>
-							<TablePane.Column width="3*"/>
-						</columns>
-						<TablePane.Row height="-1">
-							<Label text="xml"/>
-							<Label text="sel"/>
-							<Label text="away team"/>
-							<Label text="(sport code)"/>
-							<Label text="home team"/>
-							<Label text="(sport code)"/>
-							<Label text="no."/>
-							<Label text="note"/>
-						</TablePane.Row>
-					</TablePane>
-				</ScrollPane>
-			</TablePane.Row>
-		</TablePane>
+		</gd2:Gd2Uploader>
 	</TablePane.Row>
 </gui:Gd2MlbScreen>

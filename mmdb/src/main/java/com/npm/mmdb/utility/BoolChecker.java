@@ -49,4 +49,16 @@ public class BoolChecker
 		}
 		return true;
 	}
+	
+	public static final boolean checkIntsAllZero(final int... vals)
+	{
+		for (int val : vals)
+		{
+			if (val != 0)
+			{
+				return false;
+			}
+		}
+		return true;
+	}
 }

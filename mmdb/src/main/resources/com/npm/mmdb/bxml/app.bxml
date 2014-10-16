@@ -15,9 +15,9 @@
 				</FillPane>
 			</TablePane.Row>
 			<TablePane.Row height="1*">
-				<FillPane>
+				<Border>
 					<bxml:include src="core/bottomline.bxml" inline="true"/>
-				</FillPane>
+				</Border>
 			</TablePane.Row>
 		</TablePane>
 	</Border>
